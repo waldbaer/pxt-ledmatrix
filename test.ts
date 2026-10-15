@@ -598,6 +598,9 @@ function testCollisions() {
     const b = g.createSprite(ledmatrix.pattern("###|.#."), 2, 9, 0x0000FF)
     control.assert(!a.overlaps(b) && !b.overlaps(a), "pixel exact: no touch")
     control.assert(g._scratch != null && maskClear(g), "mask allocated and cleared")
+    control.assert(!b.wouldOverlap(a, 0, 0) && b.wouldOverlap(a, -1, 1), "would overlap after the move")
+    control.assert(b.x() == 2 && b.y() == 9 && maskClear(g), "would overlap does not move")
+    control.assert(!b.wouldOverlap(null, -1, 1) && !b.wouldOverlap(b, 0, 0), "would overlap: null and self")
     b.moveBy(-1, 1)
     control.assert(a.overlaps(b) && b.overlaps(a), "pixel exact: touch")
     control.assert(maskClear(g), "mask cleared after hit")
@@ -606,6 +609,7 @@ function testCollisions() {
     // hidden and removed shapes don't collide
     b.setVisible(false)
     control.assert(!a.overlaps(b) && !b.overlaps(a), "hidden no collide")
+    control.assert(!a.wouldOverlap(b, 0, 0) && !b.wouldOverlap(a, 0, 0), "hidden never blocks")
     b.setVisible(true)
     control.assert(a.overlaps(b), "visible again")
     b.remove()
@@ -629,16 +633,19 @@ function testCollisions() {
     t.setVisible(false)
     control.assert(!t.touchesDrawing(), "hidden does not touch")
 
-    // canMoveBy neither moves nor sends
+    // canMoveBy and wouldOverlap neither move nor send
     t.setVisible(true)
     t.setPosition(3, 0)
+    const o = g.createDot(4, 2, 0xFFFFFF)
     g.show()
     const n = sends
     control.assert(t.canMoveBy(0, 1) && t.x() == 3 && t.y() == 0, "can move does not move")
+    control.assert(t.wouldOverlap(o, 0, 1) && t.x() == 3 && t.y() == 0, "would overlap does not move")
     t.overlaps(t)
     t.touchesDrawing()
     g.show()
     control.assert(sends == n, "queries do not send")
+    o.remove()
 
     // stamped pixels stay after remove and after moving away; removed shapes don't stamp
     g.clear()
@@ -651,6 +658,19 @@ function testCollisions() {
     s.stamp()
     control.assert(g.getPixel(5, 5) == 0, "removed shape does not stamp")
     control.assert(!s.touchesDrawing(), "removed does not touch")
+
+    // hidden shapes don't stamp; stamped pixels keep no link to the shape
+    g.clear()
+    const h = g.createRectangle(2, 2, 2, 1, 0xFF0000, true)
+    h.setVisible(false)
+    h.stamp()
+    control.assert(litCount(g) == 0, "hidden shape does not stamp")
+    h.setVisible(true)
+    h.stamp()
+    control.assert(g.getPixel(2, 2) == 0xFF0000 && g.getPixel(3, 2) == 0xFF0000, "stamps when visible again")
+    h.setColor(0x0000FF)
+    h.remove()
+    control.assert(g.getPixel(2, 2) == 0xFF0000 && g.getPixel(3, 2) == 0xFF0000, "stamp keeps no link to the shape")
 
     // inside and edge tests
     const m = ledmatrix.create(DigitalPin.P0, 8, 8)
@@ -677,9 +697,12 @@ function testCollisions() {
     // wrap-around: wrapped pixels count
     const w1 = m.createDot(8, 0, 0xFFFFFF)
     const w2 = m.createDot(0, 0, 0xFFFFFF)
+    const w3 = m.createDot(7, 0, 0xFFFFFF)
     control.assert(!w1.overlaps(w2), "no wrap: apart")
+    control.assert(!w3.wouldOverlap(w2, 1, 0), "no wrap: would not overlap")
     m.setWrap(true)
     control.assert(w1.overlaps(w2) && w2.overlaps(w1), "wrap: same pixel")
+    control.assert(w3.wouldOverlap(w2, 1, 0) && w3.x() == 7, "wrap: would overlap")
     control.assert(w1.canMoveBy(5, 0), "wrap: can leave the matrix")
     control.assert(maskClear(m), "mask clear with wrap")
 

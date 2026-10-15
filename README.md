@@ -76,10 +76,8 @@ should walk clockwise from the top left (red top, green right, blue bottom, yell
 * `createCircle(x, y, radius, color, filled)` — positioned at its center
 * `createLine(x0, y0, x1, y1, color)` — positioned at its start point; `createDot(x, y, color)`
 * `moveBy(dx, dy)`, `setPosition(x, y)`, `x()`, `y()`, `width()`, `height()`
-* `setColor(color)`, `setVisible(on)` — hidden shapes don't collide; `bringToFront()`
+* `setColor(color)`, `setVisible(on)` — hidden shapes don't collide or stamp; `bringToFront()`
 * `remove()`, `matrix.removeAllShapes()` — the drawing layer stays
-
-## Sprites
 
 A sprite is a shape made from a pattern: click it in the 5x5 `pattern` block (`ledmatrix.grid(...)`), or
 write `ledmatrix.pattern(".#.|###")`: rows split by line breaks or `|`, `.` off, `#` the sprite's color,
@@ -92,7 +90,9 @@ write `ledmatrix.pattern(".#.|###")`: rows split by line breaks or `|`, `.` off,
 
 * `overlaps(other)`, `touchesDrawing()` — a lit pixel on a lit pixel of the other shape / the drawing layer
 * `canMoveBy(dx, dy)` — would stay inside and not touch the drawing layer (doesn't move)
-* `isInside()`, `isOnEdge()` — box inside / touching the border; `stamp()` — paint into the drawing layer
+* `wouldOverlap(other, dx, dy)` — would overlap `other` after moving by dx, dy (doesn't move)
+* `isInside()`, `isOnEdge()` — box inside / touching the border
+* `stamp()` — copy into the drawing layer as plain pixels; can't be undone, hidden shapes don't stamp
 
 ## Power and pins
 

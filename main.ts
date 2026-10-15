@@ -84,7 +84,7 @@ enum LedMatrixColors {
  * Draw on WS2812B LED matrices of any size and wiring.
  */
 //% color="#E0662B" icon="\uf00a" weight=80 block="LED Matrix"
-//% groups='["Setup", "Draw", "Text", "Shapes", "Sprites", "Collisions", "Display", "Colors"]'
+//% groups='["Setup", "Display", "Draw", "Text", "Shapes", "Collisions", "Colors"]'
 namespace ledmatrix {
 
     // Targets of Matrix._plot: every shape and drawing function renders through it.
@@ -444,7 +444,7 @@ namespace ledmatrix {
         //% blockId=ledmatrix_create_circle block="%matrix|circle at x %x|y %y|radius %radius|color %color=ledmatrix_colors|filled %filled"
         //% matrix.defl=matrix filled.shadow=toggleOnOff inlineInputMode=inline
         //% blockSetVariable=shape
-        //% group="Shapes" weight=95 blockGap=8
+        //% group="Shapes" weight=98 blockGap=8
         createCircle(x: number, y: number, radius: number, color: number, filled: boolean): Shape {
             return this._addShape(new Shape(this, _SHAPE_CIRCLE, x, y, radius, 0, color, filled))
         }
@@ -459,7 +459,7 @@ namespace ledmatrix {
         //% blockId=ledmatrix_create_line block="%matrix|line from x %x0|y %y0|to x %x1|y %y1|color %color=ledmatrix_colors"
         //% matrix.defl=matrix inlineInputMode=inline
         //% blockSetVariable=shape
-        //% group="Shapes" weight=90 blockGap=8
+        //% group="Shapes" weight=96 blockGap=8
         createLine(x0: number, y0: number, x1: number, y1: number, color: number): Shape {
             x0 = x0 | 0
             y0 = y0 | 0
@@ -474,7 +474,7 @@ namespace ledmatrix {
         //% blockId=ledmatrix_create_dot block="%matrix|dot at x %x|y %y|color %color=ledmatrix_colors"
         //% matrix.defl=matrix
         //% blockSetVariable=shape
-        //% group="Shapes" weight=85 blockGap=8
+        //% group="Shapes" weight=94 blockGap=8
         createDot(x: number, y: number, color: number): Shape {
             return this._addShape(new Shape(this, _SHAPE_DOT, x, y, 0, 0, color, false))
         }
@@ -488,7 +488,7 @@ namespace ledmatrix {
         //% blockId=ledmatrix_create_sprite block="%matrix|sprite %pattern=ledmatrix_grid|at x %x|y %y|color %color=ledmatrix_colors"
         //% matrix.defl=matrix inlineInputMode=inline
         //% blockSetVariable=sprite
-        //% group="Sprites" weight=100 blockGap=8
+        //% group="Shapes" weight=92 blockGap=8
         createSprite(pattern: Pattern, x: number, y: number, color: number): Shape {
             const s = new Shape(this, _SHAPE_SPRITE, x, y, 0, 0, color, false)
             s._pat = pattern || new Pattern(1, 1)
@@ -527,10 +527,10 @@ namespace ledmatrix {
         // -------------------------------------------------------------- display
 
         /**
-         * Send the picture (drawing layer + shapes) to the LEDs. Does nothing if
-         * nothing changed since the last time.
+         * Show everything drawn or moved since the last show on the LED matrix. Until
+         * then the LED matrix doesn't change, so call it e.g. at the end of each loop.
          */
-        //% blockId=ledmatrix_show block="%matrix|show"
+        //% blockId=ledmatrix_show block="%matrix|show changes"
         //% matrix.defl=matrix
         //% group="Display" weight=100
         show(): void {
