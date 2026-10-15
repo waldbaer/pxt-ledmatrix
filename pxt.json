@@ -1,0 +1,31 @@
+{
+    "name": "ledmatrix",
+    "version": "0.1.0",
+    "description": "LED matrix for WS2812 / WS2812B (NeoPixel) panels of any size and wiring: drawing, shapes, sprites, collisions, numbers",
+    "license": "MIT",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "README.md",
+        "driver.ts",
+        "main.ts",
+        "pattern.ts",
+        "shapes.ts",
+        "font.ts",
+        "_locales/de/ledmatrix-strings.json",
+        "_locales/de/ledmatrix-jsdoc-strings.json"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "testDependencies": {
+        "settings": "*"
+    },
+    "public": true,
+    "supportedTargets": [
+        "microbit",
+        "calliopemini"
+    ],
+    "preferredEditor": "blocksprj"
+}
