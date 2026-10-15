@@ -1,14 +1,31 @@
-// Feature tour for a WS2812B LED matrix: five scenes in a loop, each one
-// announced by its number.
-//   1 lines, rectangles, circles and pixels in the drawing layer
-//   2 a rainbow from the color wheel, scrolled with wrap-around
-//   3 a ball shape bouncing off a drawn frame, with a number shape counting bounces
-//   4 falling pieces (sprites) that stop on the pile and are stamped into the drawing
-//   5 a multi-color heart sprite wrapping around the edges
-// Uses the default layout (columns, zig-zag, first LED top left); for other
-// panels add matrix.setLayout(...) below create, see the README.
-// It uses nearly every block, so it needs a Calliope mini 3 or a micro:bit;
-// it is too big for the Calliope mini 1 and 2.
+// EN: Intermediate feature tour for a WS2812B LED matrix: five scenes in a
+//     loop, each one announced by its number.
+//     It uses many blocks, so it needs a Calliope mini 3 or a micro:bit; it
+//     is too big for the Calliope mini 1 and 2.
+//       1 lines, rectangles, circles and pixels in the drawing layer
+//       2 a rainbow from the color wheel, scrolled with wrap-around
+//       3 a ball shape bouncing off a drawn frame, with a number shape
+//         counting bounces
+//       4 falling pieces (sprites) that stop on the pile and are stamped
+//         into the drawing
+//       5 a multi-color heart sprite wrapping around the edges
+//     Uses the default layout (columns, zig-zag, first LED top left); for
+//     other panels add matrix.setLayout(...) below create, see the README.
+// DE: Rundgang für Fortgeschrittene mit einer WS2812B-LED-Matrix: fünf
+//     Szenen in einer Schleife, jede wird mit ihrer Nummer angekündigt.
+//     Er nutzt viele Blöcke und braucht deshalb einen Calliope mini 3 oder
+//     einen micro:bit; für den Calliope mini 1 und 2 ist er zu groß.
+//       1 Linien, Rechtecke, Kreise und Pixel in der Zeichnung
+//       2 ein Regenbogen aus dem Farbkreis, der über die Ränder umbrechend
+//         durchläuft
+//       3 eine Ball-Form prallt von einem gezeichneten Rahmen ab, eine
+//         Zahl-Form zählt mit
+//       4 fallende Steine (Sprites) bleiben auf dem Stapel liegen und werden
+//         in die Zeichnung gestempelt
+//       5 ein bunter Herz-Sprite läuft über die Ränder
+//     Nutzt die Standard-Verdrahtung (Spalten, Zickzack, erste LED oben
+//     links); für andere Panels füge matrix.setLayout(...) unter create
+//     ein, siehe README.
 
 let WIDTH = 16
 let HEIGHT = 16
@@ -19,7 +36,10 @@ let centerX = Math.floor(WIDTH / 2)
 let centerY = Math.floor(HEIGHT / 2)
 let scene = 0
 
-// starts the next scene: shows its number, then an empty matrix without shapes
+// EN: starts the next scene: shows its number, then an empty matrix without
+//     shapes
+// DE: startet die nächste Szene: zeigt ihre Nummer, danach eine leere Matrix
+//     ohne Formen
 function nextScene() {
     scene++
     matrix.removeAllShapes()
@@ -78,7 +98,8 @@ function ballScene() {
     let dy = 1
     let hits = 0
     for (let i = 0; i < 150; i++) {
-        // the frame is in the drawing layer, so canMoveBy() sees it
+        // EN: the frame is in the drawing layer, so canMoveBy() sees it
+        // DE: der Rahmen ist Teil der Zeichnung, deshalb sieht canMoveBy() ihn
         if (!ball.canMoveBy(dx, 0)) {
             dx = -dx
             hits++

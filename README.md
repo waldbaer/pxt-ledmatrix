@@ -24,7 +24,7 @@ matrix.show()
 ```
 
 Coordinates start top left (x to the right, y down), whatever the wiring. LEDs change only on `show()`.
-[examples/feature-tour.js](examples/feature-tour.js) and [feature-tour-2.js](examples/feature-tour-2.js) show the main features.
+Feature tours in [examples/](examples/): [beginner](examples/feature-tour-beginner.js), [intermediate](examples/feature-tour-intermediate.js), [advanced](examples/feature-tour-advanced.js).
 
 ## Setup
 

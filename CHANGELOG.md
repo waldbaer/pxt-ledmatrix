@@ -11,6 +11,7 @@
 - The `show` block reads "show changes" and comes right after Setup.
 - Sprite, pattern, `width` and `height` blocks moved into the Shapes group.
 - Clearer `show` and `stamp` tooltips.
+- Improve examples.
 
 ## [0.1.0] - 2026-10-15
 

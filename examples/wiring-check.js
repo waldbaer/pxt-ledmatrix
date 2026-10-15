@@ -1,9 +1,21 @@
-// Wiring check for a WS2812B LED matrix.
-// A 2x2 square walks clockwise along the edges, starting top left:
-// red along the top, green down the right, blue along the bottom, yellow up the left.
-// The number in the middle counts the finished laps.
-// If the square splits, starts in another corner or goes the wrong way,
-// see the troubleshooting table in the README.
+// EN: Wiring check for a WS2812B LED matrix. Run it first on a new panel:
+//     it shows which layout (setLayout) and color order (setColorOrder)
+//     your panel needs. Set your size and pin below.
+//     A 2x2 square walks clockwise along the edges, starting top left: red
+//     along the top, green down the right, blue along the bottom, yellow up
+//     the left. The number in the middle counts the finished laps.
+//     If the square splits, starts in another corner, goes the wrong way, or
+//     red and green are swapped, see the troubleshooting table in the README.
+// DE: Verdrahtungstest für eine WS2812B-LED-Matrix. Lass ihn zuerst auf
+//     einem neuen Panel laufen: Er zeigt, welche Verdrahtung (setLayout) und
+//     welche Farbreihenfolge (setColorOrder) dein Panel braucht. Trage unten
+//     deine Größe und deinen Pin ein.
+//     Ein 2x2-Quadrat läuft im Uhrzeigersinn am Rand entlang, beginnend oben
+//     links: rot oben, grün rechts hinunter, blau unten, gelb links hinauf.
+//     Die Zahl in der Mitte zählt die fertigen Runden.
+//     Wenn das Quadrat zerfällt, in einer anderen Ecke beginnt, falsch herum
+//     läuft oder rot und grün vertauscht sind, hilft die Tabelle zur
+//     Fehlersuche im README.
 
 let WIDTH = 16
 let HEIGHT = 16
@@ -16,7 +28,10 @@ let maxX = WIDTH - 2
 let maxY = HEIGHT - 2
 let laps = 0
 
-// shows the lap count in the middle (each digit is 3 wide plus 1 gap, 5 high)
+// EN: shows the lap count in the middle (each digit is 3 wide plus 1 gap,
+//     5 high)
+// DE: zeigt die Rundenzahl in der Mitte (jede Ziffer ist 3 breit plus 1
+//     Lücke, 5 hoch)
 function showLaps() {
     let numberWidth = ("" + laps).length * 4 - 1
     matrix.clear()
