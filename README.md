@@ -1,4 +1,4 @@
-# LED Matrix for WS2812 / WS2812B (NeoPixel)
+# ledmatrix: LED Matrix for WS2812 / WS2812B (NeoPixel)
 
 [![Platform](https://img.shields.io/badge/platform-MakeCode-blue)](https://makecode.com)
 [![Calliope mini](https://img.shields.io/badge/Calliope_mini-supported-brightgreen)](https://makecode.calliope.cc)
@@ -12,7 +12,7 @@ MakeCode blocks for WS2812 / WS2812B ("NeoPixel") LED matrices of any size and w
 
 ## Add the extension
 
-In MakeCode for Calliope mini or micro:bit, open **Extensions** and paste `https://github.com/waldbaer/pxt-ledmatrix`.
+In MakeCode for Calliope mini or micro:bit, open **Extensions** and paste `https://github.com/waldbaer/pxt-ledmatrix` or search for `pxt-ledmatrix`.
 
 ## Quick start
 
@@ -24,7 +24,7 @@ matrix.show()
 ```
 
 Coordinates start top left (x to the right, y down), whatever the wiring. LEDs change only on `show()`.
-Feature tours in [examples/](examples/): [beginner](examples/feature-tour-beginner.js), [intermediate](examples/feature-tour-intermediate.js), [advanced](examples/feature-tour-advanced.js).
+Feature tours in [examples/](https://github.com/waldbaer/pxt-ledmatrix/tree/main/examples): [beginner](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-beginner.js), [intermediate](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-intermediate.js), [advanced](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-advanced.js).
 
 ## Setup
 
@@ -47,7 +47,7 @@ rows, zig-zag   rows, same dir.   columns, zig-zag (default)   columns, same dir
 
 ## Wiring check
 
-Run [examples/wiring-check.js](examples/wiring-check.js) with your size and pin set at its top. A 2x2 square
+Run [examples/wiring-check.js](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/wiring-check.js) with your size and pin set at its top. A 2x2 square
 should walk clockwise from the top left (red top, green right, blue bottom, yellow left) around a lap count.
 
 | What you see | What to change |
@@ -112,7 +112,7 @@ write `ledmatrix.pattern(".#.|###")`: rows split by line breaks or `|`, `.` off,
 
 ## Changelog
 
-Changes can be followed [here](CHANGELOG.md).
+Changes can be followed [here](https://github.com/waldbaer/pxt-ledmatrix/blob/main/CHANGELOG.md).
 
 ## Supported targets
 
