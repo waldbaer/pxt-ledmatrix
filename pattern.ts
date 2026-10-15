@@ -143,7 +143,7 @@ namespace ledmatrix {
      */
     //% blockId=ledmatrix_grid block="pattern"
     //% imageLiteral=1
-    //% group="Sprites" weight=90 blockGap=8
+    //% group="Shapes" weight=90
     export function grid(leds: string): Pattern {
         const img = _literalImage(leds)
         const p = new Pattern(img.width(), img.height())
@@ -161,7 +161,7 @@ namespace ledmatrix {
      * @param text the rows of the pattern, eg: ".#.|###"
      */
     //% blockId=ledmatrix_pattern block="pattern from text %text"
-    //% group="Sprites" weight=85 blockGap=8 advanced=true
+    //% group="Shapes" weight=88 advanced=true
     export function pattern(text: string): Pattern {
         return _parse(text)
     }

@@ -96,7 +96,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_shape_set_color block="%shape|set color %color=ledmatrix_colors"
         //% shape.defl=shape
-        //% group="Shapes" weight=65 blockGap=8
+        //% group="Shapes" weight=60 blockGap=8
         setColor(color: number): void {
             this._color = color
             this._m._changed()
@@ -108,7 +108,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_shape_set_visible block="%shape|visible %on"
         //% shape.defl=shape on.shadow=toggleOnOff
-        //% group="Shapes" weight=60 blockGap=8
+        //% group="Shapes" weight=55
         setVisible(on: boolean): void {
             this._visible = on
             this._m._changed()
@@ -119,7 +119,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_shape_front block="%shape|bring to front"
         //% shape.defl=shape
-        //% group="Shapes" weight=40 blockGap=8 advanced=true
+        //% group="Shapes" weight=40 advanced=true
         bringToFront(): void {
             const list = this._m._shapes
             if (list.removeElement(this)) list.push(this)
@@ -132,7 +132,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_shape_remove block="%shape|delete"
         //% shape.defl=shape
-        //% group="Shapes" weight=55 blockGap=8
+        //% group="Shapes" weight=50 blockGap=8
         remove(): void {
             this._removed = true
             this._m._shapes.removeElement(this)
@@ -147,7 +147,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_sprite_rotate block="%sprite|rotate %direction"
         //% sprite.defl=sprite
-        //% group="Sprites" weight=80 blockGap=8
+        //% group="Shapes" weight=66 blockGap=8
         rotate(direction: LedMatrixRotation): void {
             if (this._kind != _SHAPE_SPRITE) return
             const p = this._pat
@@ -164,7 +164,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_sprite_flip block="%sprite|flip %axis"
         //% sprite.defl=sprite
-        //% group="Sprites" weight=75 blockGap=8
+        //% group="Shapes" weight=65
         flip(axis: LedMatrixFlip): void {
             if (this._kind != _SHAPE_SPRITE) return
             this._pat = this._pat._flipped(axis == LedMatrixFlip.Horizontal)
@@ -177,7 +177,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_sprite_set_pattern block="%sprite|set pattern %pattern=ledmatrix_grid"
         //% sprite.defl=sprite
-        //% group="Sprites" weight=70 blockGap=8 advanced=true
+        //% group="Shapes" weight=64 advanced=true
         setPattern(pattern: Pattern): void {
             if (this._kind != _SHAPE_SPRITE || !pattern) return
             this._pat = pattern
@@ -203,7 +203,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_shape_width block="%shape|width"
         //% shape.defl=shape
-        //% group="Sprites" weight=60 blockGap=8 advanced=true
+        //% group="Shapes" weight=68 blockGap=8 advanced=true
         width(): number {
             return this._right() - this._left() + 1
         }
@@ -213,7 +213,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_shape_height block="%shape|height"
         //% shape.defl=shape
-        //% group="Sprites" weight=59 advanced=true
+        //% group="Shapes" weight=67 advanced=true
         height(): number {
             return this._bottom() - this._top() + 1
         }
@@ -277,6 +277,29 @@ namespace ledmatrix {
         }
 
         /**
+         * True if a lit pixel of this shape would be on the same LED as a lit pixel
+         * of the other shape after moving by dx, dy. The shape does not move.
+         * Hidden and deleted shapes never overlap.
+         * @param other the shape to check against
+         * @param dx pixels to the right (negative = left), eg: 0
+         * @param dy pixels down (negative = up), eg: 1
+         */
+        //% blockId=ledmatrix_shape_would_overlap block="%shape|would overlap %other|if moved by x %dx|y %dy"
+        //% shape.defl=shape
+        //% group="Collisions" weight=89 blockGap=8
+        wouldOverlap(other: Shape, dx: number, dy: number): boolean {
+            if (!other) return false
+            dx = dx | 0
+            dy = dy | 0
+            this._x += dx
+            this._y += dy
+            const hit = this.overlaps(other)
+            this._x -= dx
+            this._y -= dy
+            return hit
+        }
+
+        /**
          * True if the whole shape is inside the matrix.
          */
         //% blockId=ledmatrix_shape_inside block="%shape|is inside"
@@ -299,14 +322,18 @@ namespace ledmatrix {
         }
 
         /**
-         * Paint the shape into the drawing layer where it is now, e.g. when a
-         * Tetris piece lands. The shape itself stays.
+         * Copy the shape's lit pixels into the drawing where it is now, e.g. for a
+         * landed Tetris piece. This flattens the shape into plain pixels: the drawing
+         * does not remember the shape or what was underneath, so a stamp cannot be
+         * undone. Only clearing or painting over the drawing removes it. The copy
+         * stays when the shape moves and is an obstacle for "can move by" and
+         * "touches drawing". Hidden shapes are not stamped.
          */
         //% blockId=ledmatrix_shape_stamp block="%shape|stamp into drawing"
         //% shape.defl=shape
         //% group="Collisions" weight=75
         stamp(): void {
-            if (this._removed) return
+            if (!this._live()) return
             this._render(_BG, this._color)
             this._m._changed()
         }
