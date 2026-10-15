@@ -16,3 +16,7 @@ jobs:
         run: npx --yes makecode@1.3.6 build
       - name: Build for micro:bit
         run: npx --yes makecode@1.3.6 build -c mkc-microbit.json
+      - name: Test in the Calliope mini simulator
+        run: node .github/scripts/sim-test.js
+      - name: Test in the micro:bit simulator
+        run: node .github/scripts/sim-test.js mkc-microbit.json
