@@ -1,12 +1,25 @@
-// Feature tour 2, the crazy one: eight scenes in a loop.
-//   countdown with an exploding ring, hypnotic tunnel, plasma, digital rain,
-//   fireworks, space invaders (a cannon that aims by itself), a bouncing
-//   counter that leaves imprints, and a pulsing barber pole.
-// Same setup as feature-tour.js: default layout (columns, zig-zag, first LED
-// top left); for other panels add matrix.setLayout(...) below create.
-// The brightness stays at the default 32 or below.
-// It needs a Calliope mini 3: it is too big for the Calliope mini 1 and 2, and
-// for the micro:bit, whose builds always include the smaller V1.
+// EN: Advanced feature tour, the crazy one: eight scenes in a loop.
+//     It needs a Calliope mini 3: it is too big for the Calliope mini 1 and
+//     2, and for the micro:bit, whose builds always include the smaller V1.
+//       countdown with an exploding ring, hypnotic tunnel, plasma, digital
+//       rain, fireworks, space invaders (a cannon that aims by itself), a
+//       bouncing counter that leaves imprints, and a pulsing barber pole.
+//     Same setup as feature-tour-intermediate.js: default layout (columns,
+//     zig-zag, first LED top left); for other panels add
+//     matrix.setLayout(...) below create.
+//     The brightness stays at the default 32 or below.
+// DE: Rundgang für Profis, der verrückte: acht Szenen in einer Schleife.
+//     Er braucht einen Calliope mini 3: für den Calliope mini 1 und 2 ist er
+//     zu groß, und auch für den micro:bit, dessen Programme immer die
+//     kleinere V1 mit enthalten.
+//       Countdown mit explodierendem Ring, hypnotischer Tunnel, Plasma,
+//       digitaler Regen, Feuerwerk, Space Invaders (eine Kanone, die von
+//       selbst zielt), ein hüpfender Zähler, der Abdrücke hinterlässt, und
+//       eine pulsierende Barbierstange.
+//     Gleiche Einrichtung wie feature-tour-intermediate.js:
+//     Standard-Verdrahtung (Spalten, Zickzack, erste LED oben links); für
+//     andere Panels füge matrix.setLayout(...) unter create ein.
+//     Die Helligkeit bleibt beim Standardwert 32 oder darunter.
 
 let WIDTH = 16
 let HEIGHT = 16
@@ -17,8 +30,10 @@ let cx = Math.floor(WIDTH / 2)
 let cy = Math.floor(HEIGHT / 2)
 let t = 0
 
-// a sine table with 32 steps per turn and values -16..16, so the effects
-// below can work with whole numbers
+// EN: a sine table with 32 steps per turn and values -16..16, so the effects
+//     below can work with whole numbers
+// DE: eine Sinustabelle mit 32 Schritten pro Umdrehung und Werten -16..16,
+//     damit die Effekte unten mit ganzen Zahlen rechnen können
 let SINE = [0]
 for (let i = 1; i < 32; i++) {
     SINE.push(Math.round(Math.sin(i * Math.PI / 16) * 16))
@@ -56,8 +71,10 @@ function countdownScene() {
     }
 }
 
-// filled circles from big to small give solid rings; shifting their hues
-// makes them run inwards
+// EN: filled circles from big to small give solid rings; shifting their hues
+//     makes them run inwards
+// DE: gefüllte Kreise von groß nach klein ergeben volle Ringe; verschobene
+//     Farbtöne lassen sie nach innen laufen
 function tunnelScene() {
     reset()
     for (t = 0; t < 100; t++) {
@@ -68,7 +85,8 @@ function tunnelScene() {
     }
 }
 
-// every pixel gets a hue from three overlapping sine waves
+// EN: every pixel gets a hue from three overlapping sine waves
+// DE: jedes Pixel bekommt einen Farbton aus drei überlagerten Sinuswellen
 function plasmaScene() {
     reset()
     for (t = 0; t < 90; t++) {
@@ -82,8 +100,12 @@ function plasmaScene() {
     }
 }
 
-// the drawing layer moves down one row per frame; new streams start in the
-// top row with a white head, followed by a green tail that gets darker
+// EN: the drawing layer moves down one row per frame; new streams start in
+//     the top row with a white head, followed by a green tail that gets
+//     darker
+// DE: die Zeichnung rutscht pro Bild eine Zeile nach unten; neue Ströme
+//     beginnen in der obersten Zeile mit einem weißen Kopf, gefolgt von
+//     einem grünen Schweif, der dunkler wird
 function rainScene() {
     reset()
     let streams = []
@@ -106,8 +128,11 @@ function rainScene() {
     }
 }
 
-// rockets fly up and burst into 16 dots; positions and speeds are in
-// 1/16 pixels, gravity pulls the dots down, and they leave dim trails
+// EN: rockets fly up and burst into 16 dots; positions and speeds are in
+//     1/16 pixels, gravity pulls the dots down, and they leave dim trails
+// DE: Raketen fliegen hoch und zerplatzen in 16 Punkte; Positionen und
+//     Geschwindigkeiten sind in 1/16 Pixel, die Schwerkraft zieht die Punkte
+//     nach unten, und sie hinterlassen schwache Spuren
 function fireworksScene() {
     reset()
     for (let rocket = 0; rocket < 5; rocket++) {
@@ -155,8 +180,11 @@ function fireworksScene() {
     }
 }
 
-// two invaders march and descend; the cannon steers below the first one and
-// fires; a shot that overlaps an invader turns it into an explosion
+// EN: two invaders march and descend; the cannon steers below the first one
+//     and fires; a shot that overlaps an invader turns it into an explosion
+// DE: zwei Invaders marschieren und sinken ab; die Kanone fährt unter den
+//     ersten und schießt; ein Schuss, der einen Invader berührt, macht ihn
+//     zu einer Explosion
 function invadersScene() {
     reset()
     let invaders = []
@@ -174,7 +202,8 @@ function invadersScene() {
     let dir = 1
     let hits = 0
     for (t = 0; t < 360; t++) {
-        // march every 6 frames, switching between the two pictures
+        // EN: march every 6 frames, switching between the two pictures
+        // DE: alle 6 Bilder einen Schritt, im Wechsel zwischen den zwei Mustern
         if (t % 6 == 0) {
             let turn = false
             for (let i = 0; i < invaders.length; i++) {
@@ -198,7 +227,8 @@ function invadersScene() {
                 dir = -dir
             }
         }
-        // the cannon follows the first invader that is still alive and fires
+        // EN: the cannon follows the first invader that is still alive and fires
+        // DE: die Kanone folgt dem ersten Invader, der noch lebt, und schießt
         let target = -1
         for (let i = invaders.length - 1; i >= 0; i--) {
             if (alive[i]) {
@@ -234,8 +264,10 @@ function invadersScene() {
                 shot.setVisible(false)
             }
         }
-        // explosions vanish after 8 frames; when all are gone, or an invader
-        // reached the cannon, a new wave comes
+        // EN: explosions vanish after 8 frames; when all are gone, or an
+        //     invader reached the cannon, a new wave comes
+        // DE: Explosionen verschwinden nach 8 Bildern; wenn alle weg sind oder
+        //     ein Invader die Kanone erreicht hat, kommt eine neue Welle
         let left = 0
         let landed = false
         for (let i = 0; i < invaders.length; i++) {
@@ -266,7 +298,8 @@ function invadersScene() {
     basic.pause(1500)
 }
 
-// a number bounces around and stamps a copy of itself at every wall
+// EN: a number bounces around and stamps a copy of itself at every wall
+// DE: eine Zahl hüpft herum und stempelt an jeder Wand eine Kopie von sich
 function bounceScene() {
     reset()
     let counter = matrix.createNumber(0, 2, 3, ledmatrix.hue(0))
@@ -305,7 +338,9 @@ function bounceScene() {
     }
 }
 
-// diagonal rainbow stripes scroll around while the brightness pulses
+// EN: diagonal rainbow stripes scroll around while the brightness pulses
+// DE: schräge Regenbogenstreifen laufen im Kreis, während die Helligkeit
+//     pulsiert
 function barberScene() {
     reset()
     for (let y = 0; y < HEIGHT; y++) {

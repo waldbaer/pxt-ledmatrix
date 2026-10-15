@@ -3,9 +3,9 @@
 # it onto a connected board.
 #
 #   cd examples
-#   ./build-and-flash.sh feature-tour.js            # Calliope mini 3
-#   ./build-and-flash.sh wiring-check.js v1         # Calliope mini 1 (v2: mini 2)
-#   ./build-and-flash.sh wiring-check.js microbit   # micro:bit
+#   ./build-and-flash.sh feature-tour-intermediate.js   # Calliope mini 3
+#   ./build-and-flash.sh wiring-check.js v1             # Calliope mini 1 (v2: mini 2)
+#   ./build-and-flash.sh wiring-check.js microbit       # micro:bit
 #
 # The build project goes to examples/built/<example>/ (ignored by git). The
 # MakeCode CLI is run with npx (set MKC to use another one). Flashing copies the
