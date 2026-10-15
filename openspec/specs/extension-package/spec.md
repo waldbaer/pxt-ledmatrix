@@ -43,11 +43,15 @@ Directly below its title, the README SHALL show a block of linked badges, one pe
 - **THEN** the seven badge lines follow the title directly and link to makecode.com, makecode.calliope.cc, makecode.microbit.org, the repository's tags page, opensource.org/licenses/MIT, the issues page and the workflow page
 
 ### Requirement: Continuous build
-The repository SHALL contain the GitHub Actions workflow `.github/workflows/build.yml`. On every push and pull request it builds the extension, including its test file, for the Calliope mini and the micro:bit, and it SHALL fail when either build fails.
+The repository SHALL contain the GitHub Actions workflow `.github/workflows/test.yml`. On every push to `main` and every pull request into `main` it builds the extension, including its test file, for the Calliope mini and the micro:bit, and runs the tests in both MakeCode simulators. It SHALL fail when a build or a test fails.
 
 #### Scenario: Compile error
 - **WHEN** a pushed commit contains a compile error
 - **THEN** the workflow fails and the build badge in the README shows failing
+
+#### Scenario: Failing test
+- **WHEN** a pull request makes a check in `test.ts` fail in a simulator
+- **THEN** the workflow fails and its log shows the message of the failed check
 
 ### Requirement: German blocks
 Every block, block parameter label, enum value and documentation comment of the extension SHALL have a German translation in `_locales/de`. In an editor set to German, the blocks SHALL appear in German.

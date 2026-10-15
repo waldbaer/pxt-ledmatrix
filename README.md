@@ -6,7 +6,7 @@
 [![GitHub Tag](https://img.shields.io/github/v/tag/waldbaer/pxt-ledmatrix?style=flat-square)](https://github.com/waldbaer/pxt-ledmatrix/tags)
 [![MIT License](https://img.shields.io/github/license/waldbaer/pxt-ledmatrix?style=flat-square)](https://opensource.org/licenses/MIT)
 [![GitHub issues open](https://img.shields.io/github/issues/waldbaer/pxt-ledmatrix?style=flat-square)](https://github.com/waldbaer/pxt-ledmatrix/issues)
-[![GitHub Actions](https://github.com/waldbaer/pxt-ledmatrix/actions/workflows/build.yml/badge.svg)](https://github.com/waldbaer/pxt-ledmatrix/actions/workflows/build.yml)
+[![GitHub Actions](https://github.com/waldbaer/pxt-ledmatrix/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/waldbaer/pxt-ledmatrix/actions/workflows/test.yml)
 
 MakeCode blocks for WS2812 / WS2812B ("NeoPixel") LED matrices of any size and wiring on Calliope mini and micro:bit.
 
@@ -117,5 +117,3 @@ Changes can be followed [here](CHANGELOG.md).
 
 * for PXT/calliopemini
 * for PXT/microbit
-
-<script src="https://makecode.com/gh-pages-embed.js"></script><script>makeCodeRender("{{ site.makecode.home_url }}", "{{ site.github.owner_name }}/{{ site.github.repository_name }}");</script>
