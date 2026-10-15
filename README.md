@@ -18,12 +18,13 @@ In MakeCode for Calliope mini or micro:bit, open **Extensions** and paste `https
 
 ```blocks
 let matrix = ledmatrix.create(DigitalPin.P0, 16, 16)
+matrix.drawRectangle(0, 0, 16, 16, ledmatrix.colors(LedMatrixColors.Blue), false)
 matrix.drawNumber(42, 5, 5, ledmatrix.colors(LedMatrixColors.Yellow))
 matrix.show()
 ```
 
 Coordinates start top left (x to the right, y down), whatever the wiring. LEDs change only on `show()`.
-[examples/feature-tour.js](examples/feature-tour.js) shows the main features one after another.
+[examples/feature-tour.js](examples/feature-tour.js) and [feature-tour-2.js](examples/feature-tour-2.js) show the main features.
 
 ## Setup
 
@@ -56,7 +57,7 @@ should walk clockwise from the top left (red top, green right, blue bottom, yell
 | It goes down first and runs counter-clockwise (looks turned by 90°) | rows / columns in `setLayout` |
 | Red and green are swapped | `setColorOrder(LedMatrixColorOrder.RGB)` |
 
-## Draw and text
+## Draw, text and colors
 
 * `setPixel(x, y, color)`, `getPixel(x, y)` — `getPixel` reads the drawing layer only
 * `drawLine(x0, y0, x1, y1, color)`
@@ -67,6 +68,7 @@ should walk clockwise from the top left (red top, green right, blue bottom, yell
 * `shift(dx, dy)` — move the whole drawing layer, e.g. for scrolling
 * `drawNumber(value, x, y, color)` — a whole number in a 3x5 digit font; only lit pixels change
 * `createNumber(value, x, y, color)`, `setNumber(value)` — a number shape (moves and collides like others)
+* `ledmatrix.colors(LedMatrixColors.Red)`, `ledmatrix.rgb(red, green, blue)`, `ledmatrix.hue(angle)` (0 = red)
 
 ## Shapes (drawn over the drawing layer on every `show()`, later ones on top)
 
@@ -90,12 +92,7 @@ write `ledmatrix.pattern(".#.|###")`: rows split by line breaks or `|`, `.` off,
 
 * `overlaps(other)`, `touchesDrawing()` — a lit pixel on a lit pixel of the other shape / the drawing layer
 * `canMoveBy(dx, dy)` — would stay inside and not touch the drawing layer (doesn't move)
-* `isInside()`, `isOnEdge()` — bounding box fully inside / touching the border
-* `stamp()` — paint the shape into the drawing layer, e.g. when a piece lands
-
-## Colors
-
-`ledmatrix.colors(LedMatrixColors.Red)`, `ledmatrix.rgb(red, green, blue)`, `ledmatrix.hue(angle)` (0 = red)
+* `isInside()`, `isOnEdge()` — box inside / touching the border; `stamp()` — paint into the drawing layer
 
 ## Power and pins
 
@@ -106,12 +103,15 @@ write `ledmatrix.pattern(".#.|###")`: rows split by line breaks or `|`, `.` off,
 
 ## Notes
 
-* Simulator: the MakeCode simulator runs programs that use this extension, but it does not show the
-  LED matrix (checked in the Calliope mini 3 and micro:bit simulators). Check the picture on the panel.
+* The MakeCode simulator runs programs that use this extension but doesn't show the matrix (checked for Calliope mini 3 and micro:bit).
 * Memory: about 8 bytes of RAM per LED (+1 once collisions are used); at most 16x16 on Calliope mini 1/2 and
   micro:bit V1. Only used blocks take flash: the wiring check needs about 15 KB, a falling-blocks game 19 KB of the
   22 KB Calliope mini 1/2 have for programs (micro:bit V1: 26 KB). Every block at once needs a mini 3 or micro:bit V2.
 * Blocks are available in English and German. License: MIT.
+
+## Changelog
+
+Changes can be followed [here](CHANGELOG.md).
 
 ## Supported targets
 
