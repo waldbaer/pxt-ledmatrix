@@ -76,7 +76,8 @@ should walk clockwise from the top left (red top, green right, blue bottom, yell
 * `createCircle(x, y, radius, color, filled)` — positioned at its center
 * `createLine(x0, y0, x1, y1, color)` — positioned at its start point; `createDot(x, y, color)`
 * `moveBy(dx, dy)`, `setPosition(x, y)`, `x()`, `y()`, `width()`, `height()`
-* `setColor(color)`, `setVisible(on)` — hidden shapes don't collide or stamp; `bringToFront()`
+* `setColor(color)`, `setBrightness(b)` — 0..255, default 255; dims all its colors on top of the matrix brightness
+* `setVisible(on)` — hidden shapes don't collide or stamp; `bringToFront()`
 * `remove()`, `matrix.removeAllShapes()` — the drawing layer stays
 
 A sprite is a shape made from a pattern: click it in the 5x5 `pattern` block (`ledmatrix.grid(...)`), or

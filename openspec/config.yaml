@@ -8,6 +8,9 @@ schema: spec-driven
 #   context: |
 #     Designs and tasks must cover Windows, macOS, and Linux
 #     Write all artifacts in Spanish
+context: |
+  Keep all docs compact and precise: OpenSpec artifacts, README, CHANGELOG, doc comments and tooltips.
+  Say each thing once, in as few words as it needs. No filler, repetition or long explanations.
 
 # Per-artifact rules (optional)
 # Add custom rules for specific artifacts.

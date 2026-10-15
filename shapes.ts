@@ -18,6 +18,7 @@ namespace ledmatrix {
         _a: number   // rect: width, circle: radius, line: dx to end
         _b: number   // rect: height, line: dy to end
         _color: number
+        _brightness: number  // 0..255, scales all its colors (255 = unchanged)
         _filled: boolean
         _visible: boolean
         _pat: Pattern  // sprites only
@@ -32,6 +33,7 @@ namespace ledmatrix {
             this._a = a | 0
             this._b = b | 0
             this._color = color
+            this._brightness = 255
             this._filled = filled
             this._visible = true
             this._pat = null
@@ -99,6 +101,22 @@ namespace ledmatrix {
         //% group="Shapes" weight=60 blockGap=8
         setColor(color: number): void {
             this._color = color
+            this._m._changed()
+        }
+
+        /**
+         * Set the brightness of the shape (0-255), on top of the matrix brightness.
+         * 255 shows its colors unchanged and lower values dim them, also the color
+         * letters of a sprite. Stamping copies the dimmed colors. At 0 the shape is
+         * black but still covers what is below it and still collides: use "visible"
+         * to hide it.
+         * @param brightness brightness from 0 to 255, eg: 128
+         */
+        //% blockId=ledmatrix_shape_set_brightness block="%shape|set brightness %brightness"
+        //% shape.defl=shape brightness.min=0 brightness.max=255
+        //% group="Shapes" weight=58 blockGap=8
+        setBrightness(brightness: number): void {
+            this._brightness = Math.clamp(0, 255, brightness | 0)
             this._m._changed()
         }
 
@@ -375,8 +393,10 @@ namespace ledmatrix {
         }
 
         // The one render routine per kind: drawing, stamping and collisions all use it.
+        // The shape's brightness applies while it renders (to colors only, see _plot).
         _render(target: number, color: number): void {
             const m = this._m
+            m._level = this._brightness
             switch (this._kind) {
                 case _SHAPE_DOT:
                     m._plot(target, this._x, this._y, color)
@@ -397,6 +417,7 @@ namespace ledmatrix {
                     _renderText(m, target, this._text, this._x, this._y, color, _DIGITS)
                     break
             }
+            m._level = 255
         }
     }
 }
