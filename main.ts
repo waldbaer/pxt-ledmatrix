@@ -114,6 +114,7 @@ namespace ledmatrix {
         _dirty: boolean    // something changed since the last send
         _scratch: Buffer   // collision mask, 1 byte per pixel, allocated on first use
         _hit: boolean      // result of the probe targets
+        _level: number     // brightness of the shape being rendered (255 = full), set by Shape._render
 
         constructor(pin: DigitalPin, width: number, height: number) {
             this._pin = pin
@@ -132,6 +133,7 @@ namespace ledmatrix {
             this._dirty = true
             this._scratch = null
             this._hit = false
+            this._level = 255
             this._buildMap()
             pins.digitalWritePin(pin, 0)
         }
@@ -583,6 +585,14 @@ namespace ledmatrix {
                 return
             }
             const i = y * w + x
+            // A dimmed shape scales the colors it writes, like the matrix brightness
+            // does. The collision targets keep their marks.
+            if (this._level < 255 && (target == _BG || target == _OUT)) {
+                const k = this._level + 1
+                color = ((((color >> 16) & 0xff) * k) >> 8) << 16
+                    | ((((color >> 8) & 0xff) * k) >> 8) << 8
+                    | (((color & 0xff) * k) >> 8)
+            }
             if (target == _BG) {
                 const bg = this._bg
                 const o = i * 3
