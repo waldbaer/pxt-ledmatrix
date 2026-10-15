@@ -12,6 +12,7 @@
 - Sprite, pattern, `width` and `height` blocks moved into the Shapes group.
 - Clearer `show` and `stamp` tooltips.
 - Improve examples.
+- README links and title work in the MakeCode extension gallery.
 
 ## [0.1.0] - 2026-10-15
 
