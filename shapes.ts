@@ -334,7 +334,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_shape_on_edge block="%shape|is on edge"
         //% shape.defl=shape
-        //% group="Collisions" weight=80 blockGap=8
+        //% group="Collisions" weight=80
         isOnEdge(): boolean {
             return this._left() <= 0 || this._top() <= 0
                 || this._right() >= this._m._w - 1 || this._bottom() >= this._m._h - 1
@@ -342,15 +342,16 @@ namespace ledmatrix {
 
         /**
          * Copy the shape's lit pixels into the drawing where it is now, e.g. for a
-         * landed Tetris piece. This flattens the shape into plain pixels: the drawing
-         * does not remember the shape or what was underneath, so a stamp cannot be
-         * undone. Only clearing or painting over the drawing removes it. The copy
-         * stays when the shape moves and is an obstacle for "can move by" and
-         * "touches drawing". Hidden shapes are not stamped.
+         * landed Tetris piece. Lines, rectangles, circles, patterns and numbers get
+         * into the drawing this way. This flattens the shape into plain pixels: the
+         * drawing does not remember the shape or what was underneath, so a stamp
+         * cannot be undone. Only clearing or painting over the drawing removes it.
+         * The copy stays when the shape moves and is an obstacle for "can move by"
+         * and "touches drawing". Hidden shapes are not stamped.
          */
         //% blockId=ledmatrix_shape_stamp block="%shape|stamp into drawing"
         //% shape.defl=shape
-        //% group="Collisions" weight=75
+        //% group="Draw" weight=90 blockGap=8
         stamp(): void {
             if (!this._live()) return
             this._render(_BG, this._color)

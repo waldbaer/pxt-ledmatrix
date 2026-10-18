@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0]
+
+### Changes
+- **Breaking:** `drawLine`, `drawRectangle`, `drawCircle`, `drawPattern` and `drawNumber` are removed. Create the shape instead, `stamp()` it into the drawing and `remove()` it.
+- The `stamp` block moved from Collisions to the Draw group.
+- The feature tours are rewritten, shorter, and renamed `feature-tour-1.js` (beginner), `feature-tour-2.js` (intermediate) and `feature-tour-3.js` (advanced).
+
 ## [0.2.0] - 2026-10-15
 
 ### Features

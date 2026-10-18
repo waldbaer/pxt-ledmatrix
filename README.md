@@ -18,13 +18,13 @@ In MakeCode for Calliope mini or micro:bit, open **Extensions** and paste `https
 
 ```blocks
 let matrix = ledmatrix.create(DigitalPin.P0, 16, 16)
-matrix.drawRectangle(0, 0, 16, 16, ledmatrix.colors(LedMatrixColors.Blue), false)
-matrix.drawNumber(42, 5, 5, ledmatrix.colors(LedMatrixColors.Yellow))
+let border = matrix.createRectangle(0, 0, 16, 16, ledmatrix.colors(LedMatrixColors.Blue), false)
+let number = matrix.createNumber(42, 5, 5, ledmatrix.colors(LedMatrixColors.Yellow))
 matrix.show()
 ```
 
 Coordinates start top left (x to the right, y down), whatever the wiring. LEDs change only on `show()`.
-Feature tours in [examples/](https://github.com/waldbaer/pxt-ledmatrix/tree/main/examples): [beginner](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-beginner.js), [intermediate](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-intermediate.js), [advanced](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-advanced.js).
+Feature tours in [examples/](https://github.com/waldbaer/pxt-ledmatrix/tree/main/examples): [beginner](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-1.js), [intermediate](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-2.js), [advanced](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-3.js).
 
 ## Setup
 
@@ -60,14 +60,10 @@ should walk clockwise from the top left (red top, green right, blue bottom, yell
 ## Draw, text and colors
 
 * `setPixel(x, y, color)`, `getPixel(x, y)` — `getPixel` reads the drawing layer only
-* `drawLine(x0, y0, x1, y1, color)`
-* `drawRectangle(x, y, width, height, color, filled)` — `x, y` is the top left corner
-* `drawCircle(x, y, radius, color, filled)` — `x, y` is the center
-* `drawPattern(pattern, x, y, color)` — off pixels of the pattern leave the drawing as it is
+* `shape.stamp()` — paint a shape (line, rectangle, circle, pattern, number) into the drawing as plain pixels; can't be undone
 * `fill(color)`, `clear()` — shapes stay
 * `shift(dx, dy)` — move the whole drawing layer, e.g. for scrolling
-* `drawNumber(value, x, y, color)` — a whole number in a 3x5 digit font; only lit pixels change
-* `createNumber(value, x, y, color)`, `setNumber(value)` — a number shape (moves and collides like others)
+* `createNumber(value, x, y, color)`, `setNumber(value)` — a whole number in a 3x5 digit font, as a shape
 * `ledmatrix.colors(LedMatrixColors.Red)`, `ledmatrix.rgb(red, green, blue)`, `ledmatrix.hue(angle)` (0 = red)
 
 ## Shapes (drawn over the drawing layer on every `show()`, later ones on top)
@@ -93,7 +89,6 @@ write `ledmatrix.pattern(".#.|###")`: rows split by line breaks or `|`, `.` off,
 * `canMoveBy(dx, dy)` — would stay inside and not touch the drawing layer (doesn't move)
 * `wouldOverlap(other, dx, dy)` — would overlap `other` after moving by dx, dy (doesn't move)
 * `isInside()`, `isOnEdge()` — box inside / touching the border
-* `stamp()` — copy into the drawing layer as plain pixels; can't be undone, hidden shapes don't stamp
 
 ## Power and pins
 

@@ -218,47 +218,58 @@ function testPixels() {
     control.assert(b.ledIndex(0, 0) == 56 && lastFrame[56 * 3] == 0xFF && lastFrame[0] == 0, "b: top left is LED 56")
 }
 
-// ---- matrix-drawing: lines, rectangles, circles, fill, clear
-function testShapesDrawn() {
+// stamps a shape into the drawing layer and deletes it: how a program paints a figure
+function paint(s: ledmatrix.Shape) {
+    s.stamp()
+    s.remove()
+}
+
+// ---- matrix-shapes: shape geometry; matrix-drawing: drawing layer, fill, clear
+function testShapeGeometry() {
     const m = ledmatrix.create(DigitalPin.P0, 8, 8)
-    m.drawLine(0, 0, 7, 7, 0xFF0000)
+    paint(m.createRectangle(1, 1, 2, 2, 0xFF0000, true))
+    control.assert(m.getPixel(1, 1) == 0xFF0000 && m.getPixel(2, 1) == 0xFF0000 && m.getPixel(1, 2) == 0xFF0000
+        && m.getPixel(2, 2) == 0xFF0000 && m._shapes.length == 0, "a figure is painted by stamping")
+    m.clear()
+
+    paint(m.createLine(0, 0, 7, 7, 0xFF0000))
     for (let i = 0; i < 8; i++) control.assert(m.getPixel(i, i) == 0xFF0000, "diagonal")
     control.assert(litCount(m) == 8, "diagonal only")
     m.clear()
     control.assert(litCount(m) == 0, "clear")
 
-    m.drawLine(3, 3, 3, 3, 0xFF0000)
+    paint(m.createLine(3, 3, 3, 3, 0xFF0000))
     control.assert(m.getPixel(3, 3) == 0xFF0000 && litCount(m) == 1, "single point")
     m.clear()
-    m.drawLine(6, 1, 0, 3, 0xFF0000)
+    paint(m.createLine(6, 1, 0, 3, 0xFF0000))
     control.assert(m.getPixel(6, 1) == 0xFF0000 && m.getPixel(0, 3) == 0xFF0000 && litCount(m) == 7, "line end points")
     m.clear()
 
-    m.drawRectangle(0, 0, 8, 8, 0x0000FF, false)
+    paint(m.createRectangle(0, 0, 8, 8, 0x0000FF, false))
     control.assert(m.getPixel(0, 7) == 0x0000FF && m.getPixel(3, 3) == 0, "outline")
     control.assert(litCount(m) == 28, "outline pixels")
     m.clear()
-    m.drawRectangle(1, 1, 2, 3, 0x00FF00, true)
+    paint(m.createRectangle(1, 1, 2, 3, 0x00FF00, true))
     control.assert(litCount(m) == 6, "filled 2x3: 6 pixels")
     for (let y = 1; y <= 3; y++)
         for (let x = 1; x <= 2; x++) control.assert(m.getPixel(x, y) == 0x00FF00, "filled 2x3")
     m.clear()
-    m.drawRectangle(1, 1, 0, 3, 0x00FF00, true)
-    m.drawRectangle(1, 1, 3, -1, 0x00FF00, false)
+    paint(m.createRectangle(1, 1, 0, 3, 0x00FF00, true))
+    paint(m.createRectangle(1, 1, 3, -1, 0x00FF00, false))
     control.assert(litCount(m) == 0, "empty rectangles draw nothing")
 
-    m.drawCircle(3, 3, 2, 0x00FF00, true)
+    paint(m.createCircle(3, 3, 2, 0x00FF00, true))
     control.assert(m.getPixel(3, 3) != 0 && m.getPixel(1, 3) != 0 && m.getPixel(5, 3) != 0
         && m.getPixel(3, 1) != 0 && m.getPixel(3, 5) != 0, "filled circle")
     control.assert(m.getPixel(1, 1) == 0, "filled circle corner")
     m.clear()
-    m.drawCircle(3, 3, 2, 0x00FF00, false)
+    paint(m.createCircle(3, 3, 2, 0x00FF00, false))
     control.assert(m.getPixel(3, 3) == 0 && m.getPixel(1, 3) != 0 && m.getPixel(3, 5) != 0, "circle outline")
     m.clear()
-    m.drawCircle(4, 4, 0, 0x00FF00, false)
+    paint(m.createCircle(4, 4, 0, 0x00FF00, false))
     control.assert(m.getPixel(4, 4) == 0x00FF00 && litCount(m) == 1, "radius 0")
     m.clear()
-    m.drawCircle(4, 4, -1, 0x00FF00, true)
+    paint(m.createCircle(4, 4, -1, 0x00FF00, true))
     control.assert(litCount(m) == 0, "negative radius")
 
     m.fill(0x102030)
@@ -374,7 +385,7 @@ function patternText(p: ledmatrix.Pattern): string {
     return t
 }
 
-// ---- matrix-shapes: patterns; matrix-drawing: drawPattern
+// ---- matrix-shapes: patterns, stamped pattern shapes
 function testPatterns() {
     const t = ledmatrix.grid(`
         . . . . .
@@ -408,14 +419,14 @@ function testPatterns() {
     `)
     control.assert(patternText(heart) == ".rr.rr.|rrrrrrr|...r...", "multi-line template")
 
-    // multi-color pattern drawn into the drawing layer; off pixels stay
+    // multi-color pattern shape stamped into the drawing layer; off pixels stay
     const m = ledmatrix.create(DigitalPin.P0, 10, 20)
     m.setPixel(1, 18, 0x123456)
-    m.drawPattern(ledmatrix.pattern("r.g|.b."), 0, 18, 0)
+    paint(m.createPattern(ledmatrix.pattern("r.g|.b."), 0, 18, 0))
     control.assert(m.getPixel(0, 18) == 0xFF0000 && m.getPixel(2, 18) == 0x00FF00
         && m.getPixel(1, 19) == 0x0000FF, "multi-color pattern")
     control.assert(m.getPixel(1, 18) == 0x123456, "off pixel leaves drawing unchanged")
-    m.drawPattern(ledmatrix.pattern("#y"), 8, 0, 0x00FFFF)
+    paint(m.createPattern(ledmatrix.pattern("#y"), 8, 0, 0x00FFFF))
     control.assert(m.getPixel(8, 0) == 0x00FFFF && m.getPixel(9, 0) == 0xFFFF00, "pattern color and letter")
 }
 
@@ -640,7 +651,7 @@ function testShapeBrightness() {
     dim.setBrightness(10)
     m.show()
     m.setPixel(5, 5, 0xFF8000)
-    m.drawRectangle(6, 6, 1, 1, 0x00FF00, true)
+    m.setPixel(6, 6, 0x00FF00)
     control.assert(m.getPixel(5, 5) == 0xFF8000 && m.getPixel(6, 6) == 0x00FF00, "drawing after a dimmed shape")
     m.createDot(4, 4, 0x0000FF)
     m.show()
@@ -848,10 +859,10 @@ function region(m: ledmatrix.Matrix, x: number, y: number, w: number, h: number)
     return t
 }
 
-// ---- matrix-fonts: drawing numbers
+// ---- matrix-fonts: number formatting, metrics, glyphs, lit pixels (stamped number shapes)
 function testNumbers() {
     const m = ledmatrix.create(DigitalPin.P0, 16, 16)
-    m.drawNumber(4, 0, 0, 0xFFFFFF)
+    paint(m.createNumber(4, 0, 0, 0xFFFFFF))
     control.assert(region(m, 0, 0, 3, 5) == "#.#|#.#|###|..#|..#", "glyph 4")
     control.assert(m.getPixel(0, 0) == 0xFFFFFF && m.getPixel(2, 4) == 0xFFFFFF && litCount(m) == 9, "glyph 4 pixels")
     m.clear()
@@ -862,52 +873,52 @@ function testNumbers() {
         "###|#.#|###|#.#|###", "###|#.#|###|..#|###"]
     for (let d = 0; d < 10; d++) {
         m.clear()
-        m.drawNumber(d, 5, 5, 0xFFFFFF)
+        paint(m.createNumber(d, 5, 5, 0xFFFFFF))
         control.assert(region(m, 5, 5, 3, 5) == glyphs[d], "glyph " + d)
     }
     m.clear()
 
-    m.drawNumber(42, 0, 0, 0xFFFFFF)
+    paint(m.createNumber(42, 0, 0, 0xFFFFFF))
     control.assert(region(m, 0, 0, 8, 6) == "#.#.###.|#.#...#.|###.###.|..#.#...|..#.###.|........", "42")
     m.clear()
-    m.drawNumber(-7, 0, 0, 0xFF0000)
+    paint(m.createNumber(-7, 0, 0, 0xFF0000))
     control.assert(region(m, 0, 0, 8, 5) == "....###.|......#.|###...#.|......#.|......#.", "-7")
     m.clear()
-    m.drawNumber(3.9, 0, 0, 0xFFFFFF)
-    m.drawNumber(-0.5, 8, 0, 0xFFFFFF)
-    control.assert(region(m, 0, 0, 4, 5) == "###.|..#.|.##.|..#.|###.", "3.9 draws 3")
-    control.assert(region(m, 8, 0, 4, 5) == "###.|#.#.|#.#.|#.#.|###.", "-0.5 draws 0 without minus")
+    paint(m.createNumber(3.9, 0, 0, 0xFFFFFF))
+    paint(m.createNumber(-0.5, 8, 0, 0xFFFFFF))
+    control.assert(region(m, 0, 0, 4, 5) == "###.|..#.|.##.|..#.|###.", "3.9 shows 3")
+    control.assert(region(m, 8, 0, 4, 5) == "###.|#.#.|#.#.|#.#.|###.", "-0.5 shows 0 without minus")
     control.assert(litCount(m) == 10 + 12, "3.9 and -0.5 pixel count")
     m.clear()
 
-    m.drawNumber(2048, 0, 0, 0xFFFFFF)
+    paint(m.createNumber(2048, 0, 0, 0xFFFFFF))
     control.assert(region(m, 0, 0, 15, 5) == "###.###.#.#.###|..#.#.#.#.#.#.#|###.#.#.###.###|#...#.#...#.#.#|###.###...#.###", "2048")
     control.assert(litCount(m) == 11 + 12 + 9 + 13, "2048 within columns 0..14")
     m.clear()
-    m.drawNumber(11, 0, 0, 0xFFFFFF)
+    paint(m.createNumber(11, 0, 0, 0xFFFFFF))
     control.assert(region(m, 4, 0, 3, 5) == glyphs[1] && region(m, 3, 0, 1, 5) == ".|.|.|.|.", "11: second digit at column 4")
     m.clear()
 
     // only lit pixels are painted
     m.fill(0x0000FF)
-    m.drawNumber(1, 0, 0, 0xFFFFFF)
+    paint(m.createNumber(1, 0, 0, 0xFFFFFF))
     control.assert(m.getPixel(0, 0) == 0x0000FF && m.getPixel(1, 0) == 0xFFFFFF && m.getPixel(3, 0) == 0x0000FF, "background stays")
     m.clear()
 
-    // updating a counter: clear the area, draw the new value
-    m.drawNumber(10, 0, 0, 0xFFFFFF)
-    m.drawRectangle(0, 0, 7, 5, 0, true)
-    m.drawNumber(9, 0, 0, 0xFFFFFF)
+    // updating a counter: stamp a black rectangle over the area, then the new value
+    paint(m.createNumber(10, 0, 0, 0xFFFFFF))
+    paint(m.createRectangle(0, 0, 7, 5, 0, true))
+    paint(m.createNumber(9, 0, 0, 0xFFFFFF))
     control.assert(region(m, 0, 0, 7, 5) == "###....|#.#....|###....|..#....|###....", "updating a counter")
     m.clear()
 
     // clipping and wrap-around like all drawing
-    m.drawNumber(7, 14, 0, 0xFFFFFF)
+    paint(m.createNumber(7, 14, 0, 0xFFFFFF))
     control.assert(litCount(m) == 2 && region(m, 14, 0, 2, 2) == "##|..", "clipped at the edge")
     m.clear()
     m.setWrap(true)
-    m.drawNumber(7, 14, 0, 0xFFFFFF)
-    control.assert(region(m, 0, 0, 1, 5) == "#|#|#|#|#", "wraps to the left edge")
+    paint(m.createNumber(7, 14, 0, 0xFFFFFF))
+    control.assert(region(m, 0, 0, 1, 5) == "#|#|#|#|#", "number wraps")
 }
 
 // shown colors of part of the last frame: w white, r red, b blue, . off, ? other
@@ -1003,7 +1014,7 @@ run("create", testCreate)
 run("layouts", testLayouts)
 run("show", testShow)
 run("pixels", testPixels)
-run("shapesDrawn", testShapesDrawn)
+run("shapeGeometry", testShapeGeometry)
 run("shift", testShift)
 run("colors", testColors)
 run("patterns", testPatterns)
