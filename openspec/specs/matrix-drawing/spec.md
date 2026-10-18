@@ -58,7 +58,7 @@ Each matrix SHALL have one drawing layer that stores a 24-bit color (0xRRGGBB) p
 - **THEN** only pixel (4, 4) changes
 
 ### Requirement: Draw patterns
-`drawPattern(pattern, x, y, color)` SHALL paint the lit pixels of a pattern (see matrix-shapes) with the pattern's top-left at (x, y). Pixels in the sprite color use `color`, and pixels with a fixed color letter use that color. Off pixels SHALL leave the drawing layer unchanged.
+`drawPattern(pattern, x, y, color)` SHALL paint the lit pixels of a pattern (see matrix-shapes) with the pattern's top-left at (x, y). Pixels in the pattern color use `color`, and pixels with a fixed color letter use that color. Off pixels SHALL leave the drawing layer unchanged.
 
 #### Scenario: Multi-color pattern
 - **WHEN** a program draws the text pattern `"r.g|.b."` at (0, 18) with color 0 on a 10x20 matrix

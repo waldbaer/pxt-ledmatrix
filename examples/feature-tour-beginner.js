@@ -7,7 +7,7 @@
 //     a comment that tells you what happens.
 //        1 Hello pixel      6 Shapes
 //        2 Drawing          7 Changing shapes
-//        3 Colors           8 Sprites
+//        3 Colors           8 Pattern shapes
 //        4 Numbers          9 Bumping into things
 //        5 Sliding         10 Secrets of the matrix
 //     The matrix works like a whiteboard with magnets on it. The drawing is
@@ -23,7 +23,7 @@
 //     jedem Schritt steht, was passiert.
 //        1 Hallo Pixel      6 Formen
 //        2 Zeichnen         7 Formen verändern
-//        3 Farben           8 Sprites
+//        3 Farben           8 Formen aus Mustern
 //        4 Zahlen           9 Zusammenstoßen
 //        5 Verschieben     10 Geheimnisse der Matrix
 //     Die Matrix ist wie eine Tafel mit Magneten. Die Zeichnung ist das, was
@@ -435,13 +435,13 @@ function changingShapesScene() {
     step()
 }
 
-// EN: Scene 8: Sprites. A sprite is a shape made from a pattern.
-// DE: Szene 8: Sprites. Ein Sprite ist eine Form aus einem Muster.
-function spritesScene() {
+// EN: Scene 8: Pattern shapes. A pattern becomes a magnet.
+// DE: Szene 8: Formen aus Mustern. Ein Muster wird zum Magneten.
+function patternShapesScene() {
     nextScene()
     // EN: An arrow made from a pattern that you can click together.
     // DE: Ein Pfeil aus einem Muster, das du zusammenklicken kannst.
-    let arrow = matrix.createSprite(ledmatrix.grid(`
+    let arrow = matrix.createPattern(ledmatrix.grid(`
         . . # . .
         . # # # .
         # . # . #
@@ -477,10 +477,10 @@ function spritesScene() {
         y y r r r y y
         . y y y y y .
     `)
-    // EN: Delete the arrow and make a sprite with the face.
-    // DE: Lösche den Pfeil und mach ein Sprite mit dem Gesicht.
+    // EN: Delete the arrow and make a shape from the face.
+    // DE: Lösche den Pfeil und mach eine Form aus dem Gesicht.
     arrow.remove()
-    let face = matrix.createSprite(happy, 4, 5, ledmatrix.colors(LedMatrixColors.Yellow))
+    let face = matrix.createPattern(happy, 4, 5, ledmatrix.colors(LedMatrixColors.Yellow))
     step()
     // EN: Swap the pattern: the face winks.
     // DE: Tausche das Muster: Das Gesicht zwinkert.
@@ -493,7 +493,7 @@ function spritesScene() {
     // EN: Delete the face and make a fish: o is orange, w is white.
     // DE: Lösche das Gesicht und mach einen Fisch: o ist orange, w ist weiß.
     face.remove()
-    let fish = matrix.createSprite(ledmatrix.pattern(`
+    let fish = matrix.createPattern(ledmatrix.pattern(`
         . . . o o . .
         o . o o o o .
         o o o o o w o
@@ -622,7 +622,7 @@ function bumpingScene() {
     // DE: stamp ("in die Zeichnung stempeln") kopiert eine Form in die
     //     Zeichnung, wie ein Stempel auf Papier. Ein Fuß läuft und hinterlässt
     //     Fußabdrücke.
-    let foot = matrix.createSprite(ledmatrix.pattern(".#.|###|###|.#."), 0, 4, ledmatrix.rgb(150, 75, 0))
+    let foot = matrix.createPattern(ledmatrix.pattern(".#.|###|###|.#."), 0, 4, ledmatrix.rgb(150, 75, 0))
     let footY = 4
     for (let x = 0; x < 14; x = x + 3) {
         foot.setPosition(x, footY)
@@ -717,7 +717,7 @@ basic.forever(function () {
     slidingScene()
     shapesScene()
     changingShapesScene()
-    spritesScene()
+    patternShapesScene()
     bumpingScene()
     secretsScene()
 })

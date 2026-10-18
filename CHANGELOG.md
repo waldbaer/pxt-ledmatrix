@@ -4,12 +4,13 @@
 
 ### Features
 - `wouldOverlap(other, dx, dy)`: would a shape overlap another one after moving? Nothing moves or is sent.
-- `setBrightness(b)` for shapes and sprites: 0..255 (default 255), multiplied with the matrix brightness; dims sprite color letters too, and stamps keep the dimmed colors.
+- `setBrightness(b)` for shapes: 0..255 (default 255), multiplied with the matrix brightness; dims pattern color letters too, and stamps keep the dimmed colors.
 
 ### Changes
 - **Behavior change:** hidden shapes no longer stamp.
+- `createSprite` is now `createPattern`; sprites are called pattern shapes.
 - The `show` block reads "show changes" and comes right after Setup.
-- Sprite, pattern, `width` and `height` blocks moved into the Shapes group.
+- Pattern, `width` and `height` blocks moved into the Shapes group.
 - Clearer `show` and `stamp` tooltips.
 - Improve examples.
 - README links and title work in the MakeCode extension gallery.

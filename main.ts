@@ -37,7 +37,7 @@ enum LedMatrixColorOrder {
 }
 
 /**
- * Direction to rotate a sprite.
+ * Direction to rotate a pattern shape.
  */
 enum LedMatrixRotation {
     //% block="right"
@@ -47,7 +47,7 @@ enum LedMatrixRotation {
 }
 
 /**
- * Axis to mirror a sprite.
+ * Axis to mirror a pattern shape.
  */
 enum LedMatrixFlip {
     //% block="horizontally"
@@ -482,17 +482,17 @@ namespace ledmatrix {
         }
 
         /**
-         * Create a sprite from a pattern, e.g. a Tetris piece. Its position is the
+         * Create a shape from a pattern, e.g. a Tetris piece. Its position is the
          * top left corner of the pattern.
          * @param x left column, eg: 0
          * @param y top row, eg: 0
          */
-        //% blockId=ledmatrix_create_sprite block="%matrix|sprite %pattern=ledmatrix_grid|at x %x|y %y|color %color=ledmatrix_colors"
+        //% blockId=ledmatrix_create_pattern block="%matrix|%pattern=ledmatrix_grid|at x %x|y %y|color %color=ledmatrix_colors"
         //% matrix.defl=matrix inlineInputMode=inline
-        //% blockSetVariable=sprite
+        //% blockSetVariable=shape
         //% group="Shapes" weight=92 blockGap=8
-        createSprite(pattern: Pattern, x: number, y: number, color: number): Shape {
-            const s = new Shape(this, _SHAPE_SPRITE, x, y, 0, 0, color, false)
+        createPattern(pattern: Pattern, x: number, y: number, color: number): Shape {
+            const s = new Shape(this, _SHAPE_PATTERN, x, y, 0, 0, color, false)
             s._pat = pattern || new Pattern(1, 1)
             return this._addShape(s)
         }
