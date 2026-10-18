@@ -3,7 +3,7 @@ namespace ledmatrix {
     export const _SHAPE_LINE = 1
     export const _SHAPE_RECT = 2
     export const _SHAPE_CIRCLE = 3
-    export const _SHAPE_SPRITE = 4
+    export const _SHAPE_PATTERN = 4
     export const _SHAPE_NUMBER = 5
 
     /**
@@ -21,7 +21,7 @@ namespace ledmatrix {
         _brightness: number  // 0..255, scales all its colors (255 = unchanged)
         _filled: boolean
         _visible: boolean
-        _pat: Pattern  // sprites only
+        _pat: Pattern  // pattern shapes only
         _text: string  // number shapes only: the formatted value
         _removed: boolean
 
@@ -58,7 +58,7 @@ namespace ledmatrix {
         }
 
         /**
-         * Put the shape at a position (top left for rectangles and sprites, center
+         * Put the shape at a position (top left for rectangles and patterns, center
          * for circles, start point for lines).
          * @param x column, eg: 0
          * @param y row, eg: 0
@@ -93,7 +93,7 @@ namespace ledmatrix {
         }
 
         /**
-         * Change the color of the shape. Pixels of a sprite that have their own
+         * Change the color of the shape. Pixels of a pattern that have their own
          * color letter keep it.
          */
         //% blockId=ledmatrix_shape_set_color block="%shape|set color %color=ledmatrix_colors"
@@ -107,7 +107,7 @@ namespace ledmatrix {
         /**
          * Set the brightness of the shape (0-255), on top of the matrix brightness.
          * 255 shows its colors unchanged and lower values dim them, also the color
-         * letters of a sprite. Stamping copies the dimmed colors. At 0 the shape is
+         * letters of a pattern. Stamping copies the dimmed colors. At 0 the shape is
          * black but still covers what is below it and still collides: use "visible"
          * to hide it.
          * @param brightness brightness from 0 to 255, eg: 128
@@ -157,17 +157,18 @@ namespace ledmatrix {
             this._m._changed()
         }
 
-        // -------------------------------------------------------------- sprites
+        // ------------------------------------------------------- pattern shapes
 
         /**
-         * Rotate a sprite by a quarter turn around its center. Other shapes don't change.
+         * Rotate a pattern shape by a quarter turn around its center. Other shapes
+         * don't change.
          * @param direction right = clockwise, left = counter-clockwise
          */
-        //% blockId=ledmatrix_sprite_rotate block="%sprite|rotate %direction"
-        //% sprite.defl=sprite
+        //% blockId=ledmatrix_shape_rotate block="%shape|rotate %direction"
+        //% shape.defl=shape
         //% group="Shapes" weight=66 blockGap=8
         rotate(direction: LedMatrixRotation): void {
-            if (this._kind != _SHAPE_SPRITE) return
+            if (this._kind != _SHAPE_PATTERN) return
             const p = this._pat
             const r = p._rotated(direction == LedMatrixRotation.Right)
             this._x += Math.idiv(p._w - r._w, 2)
@@ -177,27 +178,27 @@ namespace ledmatrix {
         }
 
         /**
-         * Mirror a sprite. Its position stays. Other shapes don't change.
+         * Mirror a pattern shape. Its position stays. Other shapes don't change.
          * @param axis horizontally = left and right swap, vertically = top and bottom swap
          */
-        //% blockId=ledmatrix_sprite_flip block="%sprite|flip %axis"
-        //% sprite.defl=sprite
+        //% blockId=ledmatrix_shape_flip block="%shape|flip %axis"
+        //% shape.defl=shape
         //% group="Shapes" weight=65
         flip(axis: LedMatrixFlip): void {
-            if (this._kind != _SHAPE_SPRITE) return
+            if (this._kind != _SHAPE_PATTERN) return
             this._pat = this._pat._flipped(axis == LedMatrixFlip.Horizontal)
             this._m._changed()
         }
 
         /**
-         * Replace the pattern of a sprite (e.g. for animation). The position stays.
+         * Give a pattern shape a new pattern (e.g. for animation). The position stays.
          * Other shapes don't change.
          */
-        //% blockId=ledmatrix_sprite_set_pattern block="%sprite|set pattern %pattern=ledmatrix_grid"
-        //% sprite.defl=sprite
+        //% blockId=ledmatrix_shape_set_pattern block="%shape|set pattern %pattern=ledmatrix_grid"
+        //% shape.defl=shape
         //% group="Shapes" weight=64 advanced=true
         setPattern(pattern: Pattern): void {
-            if (this._kind != _SHAPE_SPRITE || !pattern) return
+            if (this._kind != _SHAPE_PATTERN || !pattern) return
             this._pat = pattern
             this._m._changed()
         }
@@ -372,7 +373,7 @@ namespace ledmatrix {
             if (this._kind == _SHAPE_CIRCLE) return this._x + this._a
             if (this._kind == _SHAPE_LINE) return Math.max(this._x, this._x + this._a)
             if (this._kind == _SHAPE_RECT) return this._x + this._a - 1
-            if (this._kind == _SHAPE_SPRITE) return this._x + this._pat._w - 1
+            if (this._kind == _SHAPE_PATTERN) return this._x + this._pat._w - 1
             if (this._kind == _SHAPE_NUMBER) return this._x + _textWidth(this._text, _DIGITS) - 1
             return this._x
         }
@@ -387,7 +388,7 @@ namespace ledmatrix {
             if (this._kind == _SHAPE_CIRCLE) return this._y + this._a
             if (this._kind == _SHAPE_LINE) return Math.max(this._y, this._y + this._b)
             if (this._kind == _SHAPE_RECT) return this._y + this._b - 1
-            if (this._kind == _SHAPE_SPRITE) return this._y + this._pat._h - 1
+            if (this._kind == _SHAPE_PATTERN) return this._y + this._pat._h - 1
             if (this._kind == _SHAPE_NUMBER) return this._y + _DIGITS.h - 1
             return this._y
         }
@@ -410,7 +411,7 @@ namespace ledmatrix {
                 case _SHAPE_CIRCLE:
                     m._circle(target, this._x, this._y, this._a, color, this._filled)
                     break
-                case _SHAPE_SPRITE:
+                case _SHAPE_PATTERN:
                     this._pat._drawAt(m, target, this._x, this._y, color)
                     break
                 case _SHAPE_NUMBER:

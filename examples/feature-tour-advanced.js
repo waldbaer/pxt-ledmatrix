@@ -191,11 +191,11 @@ function invadersScene() {
     let alive = []
     let boomAt = []
     for (let i = 0; i < 2; i++) {
-        invaders.push(matrix.createSprite(invaderA, 1 + i * 7, 1, 0))
+        invaders.push(matrix.createPattern(invaderA, 1 + i * 7, 1, 0))
         alive.push(true)
         boomAt.push(-1)
     }
-    let cannon = matrix.createSprite(ledmatrix.pattern(". w .|w w w"), cx - 1, HEIGHT - 2, 0)
+    let cannon = matrix.createPattern(ledmatrix.pattern(". w .|w w w"), cx - 1, HEIGHT - 2, 0)
     let shot = matrix.createDot(0, 0, ledmatrix.colors(LedMatrixColors.Yellow))
     shot.setVisible(false)
     let flying = false

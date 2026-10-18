@@ -6,9 +6,9 @@
 //       2 a rainbow from the color wheel, scrolled with wrap-around
 //       3 a ball shape bouncing off a drawn frame, with a number shape
 //         counting bounces
-//       4 falling pieces (sprites) that stop on the pile and are stamped
-//         into the drawing
-//       5 a multi-color heart sprite wrapping around the edges
+//       4 falling pieces (pattern shapes) that stop on the pile and are
+//         stamped into the drawing
+//       5 a multi-color heart pattern wrapping around the edges
 //     Uses the default layout (columns, zig-zag, first LED top left); for
 //     other panels add matrix.setLayout(...) below create, see the README.
 // DE: Rundgang für Fortgeschrittene mit einer WS2812B-LED-Matrix: fünf
@@ -20,9 +20,9 @@
 //         durchläuft
 //       3 eine Ball-Form prallt von einem gezeichneten Rahmen ab, eine
 //         Zahl-Form zählt mit
-//       4 fallende Steine (Sprites) bleiben auf dem Stapel liegen und werden
-//         in die Zeichnung gestempelt
-//       5 ein bunter Herz-Sprite läuft über die Ränder
+//       4 fallende Steine (Formen aus Mustern) bleiben auf dem Stapel
+//         liegen und werden in die Zeichnung gestempelt
+//       5 ein buntes Herz-Muster läuft über die Ränder
 //     Nutzt die Standard-Verdrahtung (Spalten, Zickzack, erste LED oben
 //     links); für andere Panels füge matrix.setLayout(...) unter create
 //     ein, siehe README.
@@ -117,7 +117,7 @@ function ballScene() {
 
 function piecesScene() {
     nextScene()
-    let piece = matrix.createSprite(ledmatrix.grid(`
+    let piece = matrix.createPattern(ledmatrix.grid(`
         . . . . .
         . . # . .
         . # # # .
@@ -141,7 +141,7 @@ function piecesScene() {
 function heartScene() {
     nextScene()
     matrix.setWrap(true)
-    let heart = matrix.createSprite(ledmatrix.pattern(`
+    let heart = matrix.createPattern(ledmatrix.pattern(`
         . w r . r r .
         w r r r r r r
         r r r r r r r

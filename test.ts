@@ -361,7 +361,7 @@ function testColors() {
     control.assert(ledmatrix.hue(120.7) == 0x00FF00, "hue truncated")
 }
 
-// a pattern as text: "#" sprite color, letters for fixed colors, "." off, rows joined by "|"
+// a pattern as text: "#" pattern color, letters for fixed colors, "." off, rows joined by "|"
 function patternText(p: ledmatrix.Pattern): string {
     let t = ""
     for (let y = 0; y < p.height(); y++) {
@@ -416,7 +416,7 @@ function testPatterns() {
         && m.getPixel(1, 19) == 0x0000FF, "multi-color pattern")
     control.assert(m.getPixel(1, 18) == 0x123456, "off pixel leaves drawing unchanged")
     m.drawPattern(ledmatrix.pattern("#y"), 8, 0, 0x00FFFF)
-    control.assert(m.getPixel(8, 0) == 0x00FFFF && m.getPixel(9, 0) == 0xFFFF00, "sprite color and letter")
+    control.assert(m.getPixel(8, 0) == 0x00FFFF && m.getPixel(9, 0) == 0xFFFF00, "pattern color and letter")
 }
 
 // ---- matrix-shapes: shapes on top of the drawing layer
@@ -490,11 +490,11 @@ function testShapes() {
     m.show()
     const d = m.createDot(1, 1, 0xFFFFFF)
     control.assert(d.width() == 1 && d.height() == 1, "dot size")
-    const t = m.createSprite(ledmatrix.pattern(".#.|###"), 3, 0, 0xFF00FF)
-    control.assert(t.x() == 3 && t.y() == 0 && t.width() == 3 && t.height() == 2, "sprite position")
+    const t = m.createPattern(ledmatrix.pattern(".#.|###"), 3, 0, 0xFF00FF)
+    control.assert(t.x() == 3 && t.y() == 0 && t.width() == 3 && t.height() == 2, "pattern shape position")
 
-    // sprite letters keep their color
-    const s = m.createSprite(ledmatrix.pattern("r#"), 0, 7, 0x0000FF)
+    // pattern letters keep their color
+    const s = m.createPattern(ledmatrix.pattern("r#"), 0, 7, 0x0000FF)
     s.setColor(0x00FF00)
     m.show()
     control.assert(shown(m, 0, 7) == 0xFF0000 && shown(m, 1, 7) == 0x00FF00, "set color keeps letters")
@@ -565,11 +565,11 @@ function testShapeBrightness() {
     control.assert(received(m, 0, 0, false) == 0, "shape brightness -5 -> 0")
     d.remove()
 
-    // sprite letters are dimmed too
-    const s = m.createSprite(ledmatrix.pattern("r#"), 0, 1, 0x0000FF)
+    // pattern letters are dimmed too
+    const s = m.createPattern(ledmatrix.pattern("r#"), 0, 1, 0x0000FF)
     s.setBrightness(127)
     m.show()
-    control.assert(received(m, 0, 1, false) == 0x7F0000 && received(m, 1, 1, false) == 0x00007F, "sprite letters dimmed")
+    control.assert(received(m, 0, 1, false) == 0x7F0000 && received(m, 1, 1, false) == 0x00007F, "pattern letters dimmed")
     s.remove()
 
     // the levels multiply: about half and about half give about a quarter
@@ -614,7 +614,7 @@ function testShapeBrightness() {
     v.setVisible(true)
     m.show()
     control.assert(received(m, 0, 6, false) == 0x7F0000, "hide and show keep the brightness")
-    const sp = m.createSprite(ledmatrix.pattern("##"), 0, 4, 0xFF0000)
+    const sp = m.createPattern(ledmatrix.pattern("##"), 0, 4, 0xFF0000)
     sp.setBrightness(127)
     sp.rotate(LedMatrixRotation.Right)
     sp.flip(LedMatrixFlip.Vertical)
@@ -664,9 +664,9 @@ function testShapeBrightness() {
 }
 
 // ---- matrix-shapes: rotate, flip, set pattern
-function testSprites() {
+function testPatternShapes() {
     const m = ledmatrix.create(DigitalPin.P0, 10, 20)
-    const t = m.createSprite(ledmatrix.pattern(".#.|###"), 3, 0, 0xFF00FF)
+    const t = m.createPattern(ledmatrix.pattern(".#.|###"), 3, 0, 0xFF00FF)
     t.rotate(LedMatrixRotation.Right)
     control.assert(patternText(t._pat) == "#.|##|#." && t.width() == 2 && t.height() == 3, "T turns right")
     t.rotate(LedMatrixRotation.Left)
@@ -674,13 +674,13 @@ function testSprites() {
     t.rotate(LedMatrixRotation.Left)
     control.assert(patternText(t._pat) == ".#|##|.#", "T turns left")
 
-    const bar = m.createSprite(ledmatrix.pattern("####"), 3, 5, 0x00FFFF)
+    const bar = m.createPattern(ledmatrix.pattern("####"), 3, 5, 0x00FFFF)
     bar.rotate(LedMatrixRotation.Right)
     control.assert(bar.x() == 4 && bar.y() == 4 && bar.width() == 1 && bar.height() == 4, "bar after right")
     bar.rotate(LedMatrixRotation.Left)
     control.assert(bar.x() == 3 && bar.y() == 5 && bar.width() == 4 && bar.height() == 1, "bar round trip")
 
-    const l = m.createSprite(ledmatrix.pattern("#..|###"), 2, 2, 0xFFFFFF)
+    const l = m.createPattern(ledmatrix.pattern("#..|###"), 2, 2, 0xFFFFFF)
     l.flip(LedMatrixFlip.Horizontal)
     control.assert(patternText(l._pat) == "..#|###" && l.x() == 2 && l.y() == 2, "horizontal flip")
     l.flip(LedMatrixFlip.Vertical)
@@ -690,7 +690,7 @@ function testSprites() {
     l.setPattern(null)
     control.assert(patternText(l._pat) == "##|##", "set pattern null ignored")
 
-    // sprite changes send; on other shapes these do nothing
+    // pattern shape changes send; on other shapes these do nothing
     m.show()
     let n = sends
     l.rotate(LedMatrixRotation.Right)
@@ -699,7 +699,7 @@ function testSprites() {
     m.show()
     l.setPattern(ledmatrix.pattern("#"))
     m.show()
-    control.assert(sends == n + 3, "sprite changes send")
+    control.assert(sends == n + 3, "pattern shape changes send")
     const r = m.createRectangle(0, 0, 3, 2, 0xFFFFFF, true)
     m.show()
     n = sends
@@ -722,8 +722,8 @@ function testCollisions() {
     control.assert(g._scratch == null, "mask not allocated before use")
 
     // pixel exact: boxes overlap, pixels don't
-    const a = g.createSprite(ledmatrix.pattern(".#.|###"), 0, 10, 0xFF0000)
-    const b = g.createSprite(ledmatrix.pattern("###|.#."), 2, 9, 0x0000FF)
+    const a = g.createPattern(ledmatrix.pattern(".#.|###"), 0, 10, 0xFF0000)
+    const b = g.createPattern(ledmatrix.pattern("###|.#."), 2, 9, 0x0000FF)
     control.assert(!a.overlaps(b) && !b.overlaps(a), "pixel exact: no touch")
     control.assert(g._scratch != null && maskClear(g), "mask allocated and cleared")
     control.assert(!b.wouldOverlap(a, 0, 0) && b.wouldOverlap(a, -1, 1), "would overlap after the move")
@@ -745,7 +745,7 @@ function testCollisions() {
     a.remove()
 
     // falling piece lands on the floor, then on the stamped piece
-    const t = g.createSprite(ledmatrix.pattern(".#.|###"), 3, 0, 0xFF00FF)
+    const t = g.createPattern(ledmatrix.pattern(".#.|###"), 3, 0, 0xFF00FF)
     while (t.canMoveBy(0, 1)) t.moveBy(0, 1)
     control.assert(t.y() == 18, "landed at bottom")
     t.stamp()
@@ -777,7 +777,7 @@ function testCollisions() {
 
     // stamped pixels stay after remove and after moving away; removed shapes don't stamp
     g.clear()
-    const s = g.createSprite(ledmatrix.pattern("r#"), 0, 0, 0x00FF00)
+    const s = g.createPattern(ledmatrix.pattern("r#"), 0, 0, 0x00FF00)
     s.stamp()
     s.moveBy(5, 5)
     control.assert(g.getPixel(0, 0) == 0xFF0000 && g.getPixel(1, 0) == 0x00FF00, "stamp then move")
@@ -985,7 +985,7 @@ function testNumberShapes() {
     number.setPosition(8, 10)
     control.assert(number.isInside() && !number.isOnEdge(), "box inside")
 
-    // number-only and sprite-only changes do nothing on the other kinds
+    // number-only and pattern-only changes do nothing on the other kinds
     m.show()
     const n = sends
     dot.setNumber(5)
@@ -1009,7 +1009,7 @@ run("colors", testColors)
 run("patterns", testPatterns)
 run("shapes", testShapes)
 run("shapeBrightness", testShapeBrightness)
-run("sprites", testSprites)
+run("patternShapes", testPatternShapes)
 run("collisions", testCollisions)
 run("numbers", testNumbers)
 run("numberShapes", testNumberShapes)

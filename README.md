@@ -80,11 +80,11 @@ should walk clockwise from the top left (red top, green right, blue bottom, yell
 * `setVisible(on)` — hidden shapes don't collide or stamp; `bringToFront()`
 * `remove()`, `matrix.removeAllShapes()` — the drawing layer stays
 
-A sprite is a shape made from a pattern: click it in the 5x5 `pattern` block (`ledmatrix.grid(...)`), or
-write `ledmatrix.pattern(".#.|###")`: rows split by line breaks or `|`, `.` off, `#` the sprite's color,
+A pattern shape is a shape made from a pattern: click it in the 5x5 `pattern` block (`ledmatrix.grid(...)`), or
+write `ledmatrix.pattern(".#.|###")`: rows split by line breaks or `|`, `.` off, `#` the pattern color,
 `r o y g c b p w` fixed colors. Empty rows and columns at the edges are removed.
 
-* `createSprite(pattern, x, y, color)` — positioned at its top left
+* `createPattern(pattern, x, y, color)` — positioned at its top left
 * `rotate(direction)` (quarter turn), `flip(axis)` (mirror), `setPattern(pattern)` (e.g. for animation)
 
 ## Collisions (pixel exact: boxes that overlap don't collide unless lit pixels do)

@@ -1,7 +1,7 @@
 namespace ledmatrix {
     // Pixel codes inside a pattern
     const _OFF = 0
-    const _OWN = 1          // uses the sprite's color
+    const _OWN = 1          // uses the pattern color
     const _LETTERS = "roygcbpw"
     const _LETTER_COLORS = [0xFF0000, 0xFFA500, 0xFFFF00, 0x00FF00, 0x00FFFF, 0x0000FF, 0xFF00FF, 0xFFFFFF]
 
@@ -155,7 +155,7 @@ namespace ledmatrix {
 
     /**
      * A pattern from text of any size: one line per row (or rows separated by "|"),
-     * "." = off, "#" = sprite color,
+     * "." = off, "#" = pattern color,
      * letters r o y g c b p w = red, orange, yellow, green, cyan, blue, purple, white.
      * Empty rows and columns at the edges are removed.
      * @param text the rows of the pattern, eg: ".#.|###"
