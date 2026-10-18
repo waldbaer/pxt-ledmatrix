@@ -27,6 +27,7 @@ let square = matrix.createRectangle(0, 0, 2, 2, ledmatrix.colors(LedMatrixColors
 let maxX = WIDTH - 2
 let maxY = HEIGHT - 2
 let laps = 0
+let lapNumber = matrix.createNumber(laps, 0, 0, ledmatrix.colors(LedMatrixColors.White))
 
 // EN: shows the lap count in the middle (each digit is 3 wide plus 1 gap,
 //     5 high)
@@ -34,8 +35,8 @@ let laps = 0
 //     Lücke, 5 hoch)
 function showLaps() {
     let numberWidth = ("" + laps).length * 4 - 1
-    matrix.clear()
-    matrix.drawNumber(laps, Math.floor((WIDTH - numberWidth) / 2), Math.floor((HEIGHT - 5) / 2), ledmatrix.colors(LedMatrixColors.White))
+    lapNumber.setNumber(laps)
+    lapNumber.setPosition(Math.floor((WIDTH - numberWidth) / 2), Math.floor((HEIGHT - 5) / 2))
 }
 
 function step() {

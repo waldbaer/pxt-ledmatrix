@@ -6,30 +6,30 @@ Renders text-like content on a matrix using small bitmap fonts sized for LED pan
 
 ## Requirements
 
-### Requirement: Draw numbers
-`drawNumber(value, x, y, color)` SHALL draw the decimal form of `value` into the drawing layer using the 3x5 digit font, with the top-left of the first character at (x, y). The value SHALL be truncated toward zero to an integer. A negative result SHALL be drawn with a leading minus sign, and zero SHALL be drawn as a single `0`.
+### Requirement: Number formatting
+A number shape SHALL show its value truncated toward zero to an integer. A negative result SHALL be shown with a leading minus sign, and zero as a single `0`.
 
 #### Scenario: Positive number
-- **WHEN** a program calls `drawNumber(42, 0, 0, 0xFFFFFF)` on a 16x16 matrix
+- **WHEN** a white number shape `42` at (0, 0) is stamped on a 16x16 matrix
 - **THEN** the glyph `4` occupies columns 0..2, column 3 is untouched, and the glyph `2` occupies columns 4..6, all in rows 0..4
 
 #### Scenario: Negative number
-- **WHEN** a program calls `drawNumber(-7, 0, 0, 0xFF0000)`
+- **WHEN** a red number shape `-7` at (0, 0) is stamped
 - **THEN** the minus glyph occupies columns 0..2 and the glyph `7` occupies columns 4..6
 
 #### Scenario: Non-integer value
-- **WHEN** a program calls `drawNumber(3.9, 0, 0, 0xFFFFFF)` and `drawNumber(-0.5, 8, 0, 0xFFFFFF)`
-- **THEN** the first call draws `3` and the second draws `0` without a minus sign
+- **WHEN** a number shape `3.9` at (0, 0) and a number shape `-0.5` at (8, 0) are stamped
+- **THEN** the first shows `3` and the second shows `0` without a minus sign
 
 ### Requirement: Digit font metrics
 Every character of the digit font SHALL be 3 pixels wide and 5 pixels high, and adjacent characters SHALL be separated by exactly 1 empty column. A number with n characters (including a minus sign) therefore occupies 4n - 1 columns and 5 rows. Glyphs SHALL NOT be trimmed, so every digit has the same width.
 
 #### Scenario: Width of a four-digit number
-- **WHEN** a program draws `2048` at (0, 0)
-- **THEN** the drawn characters lie within columns 0..14 and rows 0..4
+- **WHEN** a number shape `2048` at (0, 0) is stamped
+- **THEN** the stamped pixels lie within columns 0..14 and rows 0..4
 
 #### Scenario: Narrow digit keeps its width
-- **WHEN** a program draws `11` at (0, 0)
+- **WHEN** a number shape `11` at (0, 0) is stamped
 - **THEN** the second `1` starts at column 4, exactly as any other second digit would
 
 ### Requirement: Digit glyphs
@@ -45,22 +45,26 @@ The digit font SHALL use these glyphs (`#` lit, `.` not painted), in rows from t
 ```
 
 #### Scenario: Glyph of 4
-- **WHEN** a program draws `4` at (0, 0) in white on a cleared matrix
+- **WHEN** a white number shape `4` at (0, 0) is stamped on a cleared matrix
 - **THEN** pixels (0,0), (2,0), (0,1), (2,1), (0,2), (1,2), (2,2), (2,3), (2,4) are white and all other pixels in columns 0..2, rows 0..4 are off
 
 ### Requirement: Only lit pixels are painted
-Drawing a number SHALL only paint the lit pixels of its glyphs. All other pixels of the drawing layer, including the gaps and the unlit parts of glyphs, SHALL stay unchanged. Pixels outside the matrix SHALL follow the wrap-around setting like all other drawing.
+A number shape SHALL paint only the lit pixels of its glyphs, when shown and when stamped. Its gaps and the unlit parts of its glyphs SHALL leave what is below unchanged. Pixels outside the matrix SHALL follow the wrap-around setting like all other drawing.
 
 #### Scenario: Background stays
-- **WHEN** the drawing layer is filled blue and a program draws `1` in white at (0, 0)
+- **WHEN** the drawing layer is filled blue and a white number shape `1` at (0, 0) is stamped
 - **THEN** pixel (0, 0) (unlit in the glyph `1`) is still blue
 
 #### Scenario: Updating a counter
-- **WHEN** a program draws `10` at (0, 0), then clears the area with a filled black rectangle and draws `9` at (0, 0)
-- **THEN** only the glyph `9` is visible in that area
+- **WHEN** number shape `10` at (0, 0) is stamped, then a filled black 7x5 rectangle shape at (0, 0), then number shape `9` at (0, 0)
+- **THEN** only the glyph `9` is lit in that area
+
+#### Scenario: Number wraps
+- **WHEN** wrap-around is on and a number shape `7` at (14, 0) is stamped on a 16x16 matrix
+- **THEN** the right column of the glyph `7` lands in column 0, rows 0..4
 
 ### Requirement: Number shapes
-`createNumber(value, x, y, color)` SHALL create a shape (see matrix-shapes) that shows `value` in the digit font with its top-left at (x, y), formatted like `drawNumber`. A number shape SHALL behave like every other shape: it is drawn above the drawing layer in list order, and it can be moved, recolored, hidden, brought to front, stamped and removed. Rotate, flip and set-pattern SHALL do nothing on it.
+`createNumber(value, x, y, color)` SHALL create a shape (see matrix-shapes) that shows `value` in the digit font with its top-left at (x, y). A number shape SHALL behave like every other shape: it is drawn above the drawing layer in list order, and it can be moved, recolored, hidden, brought to front, stamped and removed. Rotate, flip and set-pattern SHALL do nothing on it.
 
 #### Scenario: Number above the drawing layer
 - **WHEN** the drawing layer is filled blue and a white number shape `5` is created at (0, 0) and shown

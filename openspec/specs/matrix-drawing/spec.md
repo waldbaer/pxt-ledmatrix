@@ -2,16 +2,20 @@
 
 ## Purpose
 
-Provides a persistent drawing layer per matrix and the graphics primitives and color helpers that paint into it. This is the "canvas" that shapes are drawn on top of.
+Provides a persistent drawing layer per matrix, the pixel operations that change it, and the color helpers. Shapes are drawn on top of it and can be stamped into it.
 
 ## Requirements
 
 ### Requirement: Drawing layer
-Each matrix SHALL have one drawing layer that stores a 24-bit color (0xRRGGBB) per pixel. It starts all off (0x000000) and keeps its content until a program changes it. A pixel counts as lit when its color is not 0x000000. Drawing with color 0x000000 turns pixels off. Shapes SHALL NOT change the drawing layer, except through stamping.
+Each matrix SHALL have one drawing layer that stores a 24-bit color (0xRRGGBB) per pixel. It starts all off (0x000000) and keeps its content until a program changes it. Only `setPixel`, `fill`, `clear`, `shift` and stamping a shape SHALL change it. A pixel counts as lit when its color is not 0x000000. Writing color 0x000000 turns pixels off.
 
 #### Scenario: Content persists across frames
 - **WHEN** a program draws a pixel, calls `show()`, and calls `show()` again later
 - **THEN** the pixel is still part of the frame
+
+#### Scenario: A figure is painted by stamping
+- **WHEN** a program creates a filled red 2x2 rectangle shape at (1, 1), stamps it and removes it
+- **THEN** `getPixel` returns 0xFF0000 for (1, 1), (2, 1), (1, 2) and (2, 2), and the matrix has no shape
 
 ### Requirement: Set and read pixels
 `setPixel(x, y, color)` SHALL store the color at (x, y). `getPixel(x, y)` SHALL return the stored color of the drawing layer (shapes are not included). Coordinates are truncated to integers. With wrap-around off, writing outside the matrix SHALL be ignored and reading outside SHALL return 0.
@@ -23,46 +27,6 @@ Each matrix SHALL have one drawing layer that stores a 24-bit color (0xRRGGBB) p
 #### Scenario: Outside is ignored
 - **WHEN** wrap-around is off and a program calls `setPixel(-1, 0, 0xFF0000)` on an 8x8 matrix
 - **THEN** no pixel changes and `getPixel(-1, 0)` returns 0
-
-### Requirement: Lines
-`drawLine(x0, y0, x1, y1, color)` SHALL draw a straight line using Bresenham's algorithm. Both end points are included.
-
-#### Scenario: Diagonal
-- **WHEN** a program draws a line from (0, 0) to (7, 7) in red on an 8x8 matrix
-- **THEN** the pixels (i, i) for i = 0..7 are red and no other pixel changes
-
-#### Scenario: Single point
-- **WHEN** a program draws a line from (3, 3) to (3, 3)
-- **THEN** only pixel (3, 3) changes
-
-### Requirement: Rectangles
-`drawRectangle(x, y, width, height, color, filled)` SHALL draw a rectangle whose top-left pixel is (x, y). Filled, all pixels inside are set. Not filled, only the one-pixel border is set. A width or height of 0 or less SHALL draw nothing.
-
-#### Scenario: Outline
-- **WHEN** a program draws an unfilled 8x8 blue rectangle at (0, 0) on an 8x8 matrix
-- **THEN** `getPixel(0, 7)` is blue and `getPixel(3, 3)` is 0
-
-#### Scenario: Filled
-- **WHEN** a program draws a filled 2x3 rectangle at (1, 1)
-- **THEN** exactly the 6 pixels with x in 1..2 and y in 1..3 are set
-
-### Requirement: Circles
-`drawCircle(x, y, radius, color, filled)` SHALL draw a circle centered at (x, y) using the midpoint circle algorithm. Filled, the inside is set as well. Radius 0 SHALL set only the center pixel, and a negative radius SHALL draw nothing.
-
-#### Scenario: Filled circle
-- **WHEN** a program draws a filled circle at (3, 3) with radius 2
-- **THEN** (3, 3), (1, 3), (5, 3), (3, 1) and (3, 5) are set and (1, 1) is not set
-
-#### Scenario: Radius 0
-- **WHEN** a program draws a circle at (4, 4) with radius 0
-- **THEN** only pixel (4, 4) changes
-
-### Requirement: Draw patterns
-`drawPattern(pattern, x, y, color)` SHALL paint the lit pixels of a pattern (see matrix-shapes) with the pattern's top-left at (x, y). Pixels in the pattern color use `color`, and pixels with a fixed color letter use that color. Off pixels SHALL leave the drawing layer unchanged.
-
-#### Scenario: Multi-color pattern
-- **WHEN** a program draws the text pattern `"r.g|.b."` at (0, 18) with color 0 on a 10x20 matrix
-- **THEN** `getPixel(0, 18)` = 0xFF0000, `getPixel(2, 18)` = 0x00FF00, `getPixel(1, 19)` = 0x0000FF and `getPixel(1, 18)` is unchanged
 
 ### Requirement: Fill and clear
 `fill(color)` SHALL set every pixel of the drawing layer to `color`. `clear()` SHALL turn every pixel of the drawing layer off. Neither SHALL change shapes.

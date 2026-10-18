@@ -91,7 +91,7 @@ The README SHALL describe the MakeCode simulator's behavior with the extension o
 - **THEN** the README states that the matrix is not shown in the simulator
 
 ### Requirement: Wiring-check example
-The repository SHALL contain `examples/wiring-check.js`. Its first comment SHALL say what it is for: running it first on a new panel to find the layout and color order settings. It creates a 16x16 matrix on P0 with the default layout, with size and pin in variables at the top. A 2x2 square walks clockwise along the edges from the top-left: red along the top, green down the right, blue along the bottom, yellow up the left. The finished laps are shown centered with `drawNumber`.
+The repository SHALL contain `examples/wiring-check.js`. Its first comment SHALL say what it is for: running it first on a new panel to find the layout and color order settings. It creates a 16x16 matrix on P0 with the default layout, with size and pin in variables at the top. A 2x2 square walks clockwise along the edges from the top-left: red along the top, green down the right, blue along the bottom, yellow up the left. The finished laps are shown centered by a number shape.
 
 #### Scenario: Correct wiring
 - **WHEN** the example runs on a panel whose layout matches the settings
@@ -108,20 +108,16 @@ Every example program in `examples/` SHALL be valid both as plain JavaScript and
 - **WHEN** any example program is copied into a MakeCode project that depends on this extension and built for the Calliope mini 3
 - **THEN** the build succeeds without errors
 
-### Requirement: Feature tours
-`examples/` SHALL contain three feature tours: `feature-tour-beginner.js`, `feature-tour-intermediate.js` and `feature-tour-advanced.js`. Each runs its scenes in a loop on a 16x16 matrix on P0 with the default layout, with size and pin in variables at the top, and never sets the matrix brightness above the default 32. Each tour's first comment SHALL name the boards it runs on. The README SHALL link all three.
+### Requirement: Three feature tours
+`examples/` SHALL contain three feature tours: `feature-tour-1.js` (beginner), `feature-tour-2.js` (intermediate) and `feature-tour-3.js` (advanced). Each runs its scenes in a loop on a 16x16 matrix on P0 with the default layout, with size and pin in variables at the top, and never sets the matrix brightness above the default 32. Each tour's first comment SHALL name its level and the boards it runs on. The README SHALL link all three.
 
 #### Scenario: Tour files
 - **WHEN** `examples/` is listed
-- **THEN** it contains the three tours and neither `feature-tour.js` nor `feature-tour-2.js`
+- **THEN** it contains `feature-tour-1.js`, `feature-tour-2.js` and `feature-tour-3.js`, and none of `feature-tour-beginner.js`, `feature-tour-intermediate.js` and `feature-tour-advanced.js`
 
-#### Scenario: Renamed tours unchanged
-- **WHEN** the intermediate and the advanced tour run on a panel
-- **THEN** they show the same scenes as `feature-tour.js` and `feature-tour-2.js` did before the rename
-
-#### Scenario: Board hint
-- **WHEN** a reader opens the beginner or the advanced tour
-- **THEN** its first comment says that it needs a Calliope mini 3
+#### Scenario: Level and board hint
+- **WHEN** a reader opens any tour
+- **THEN** its first comment names its level and the boards it runs on
 
 #### Scenario: Brightness limit
 - **WHEN** any tour runs
@@ -131,12 +127,37 @@ Every example program in `examples/` SHALL be valid both as plain JavaScript and
 - **WHEN** the README is read
 - **THEN** it links each of the three tours
 
-### Requirement: Beginner tour covers every block
-The beginner tour SHALL use every block of the extension at least once, except "set wiring" and "set color order": a program cannot read these settings back, so the tour could not restore them.
+### Requirement: Short feature tours
+`feature-tour-1.js` SHALL have at most 150 lines, `feature-tour-2.js` at most 250 and `feature-tour-3.js` at most 300, comments included.
+
+#### Scenario: Line count
+- **WHEN** the lines of the three tours are counted
+- **THEN** tour 1 has at most 150, tour 2 at most 250 and tour 3 at most 300
+
+### Requirement: Tours cover every block
+Every block of the extension SHALL be used in at least one tour, except "set wiring" and "set color order": a program cannot read these settings back, so a tour could not restore them.
 
 #### Scenario: Coverage check
-- **WHEN** the tour is searched for the function behind every block of the extension
-- **THEN** each one is found, except `setLayout` and `setColorOrder`, and both the matrix's and a shape's `width` and `height` are used
+- **WHEN** the three tours are searched for the function behind every block of the extension
+- **THEN** each one is found in at least one tour, except `setLayout` and `setColorOrder`, and both the matrix's and a shape's `width` and `height` are used
+
+### Requirement: Beginner tour shows the basics
+The beginner tour is for pupils of 10 to 12. It SHALL use only these blocks: `create`, `show`, `setPixel`, `colors`, `rgb`, `fill`, `clear`, `createLine`, `createRectangle`, `moveBy`, `removeAllShapes`, `createNumber` and `setNumber`.
+
+#### Scenario: Only the basic blocks
+- **WHEN** the beginner tour is searched for the function behind every block of the extension
+- **THEN** only the thirteen functions above are found
+
+### Requirement: Advanced tour shows games
+The advanced tour SHALL show small games made from shapes and collision queries, such as invaders and pong, and the advanced blocks. Its game scenes SHALL NOT call `setPixel`, `getPixel`, `fill` or `shift`.
+
+#### Scenario: No pixel effects in games
+- **WHEN** the game scenes of the advanced tour are searched for `setPixel`, `getPixel`, `fill` and `shift`
+- **THEN** none is found
+
+#### Scenario: Games
+- **WHEN** the advanced tour runs
+- **THEN** it shows at least two games in which shapes move and react to collisions
 
 ### Requirement: Beginner tour pace
 The beginner tour SHALL change one thing on the panel per step and then pause, long enough for a child to see the change. One variable at the top SHALL set this pause. Before each scene the tour SHALL show the scene's number, and the code SHALL mark the scene with the same number.
@@ -165,7 +186,7 @@ The beginner tour SHALL be readable for a 12-year-old with little programming ex
 - **THEN** a comment directly above it says what the step does
 
 ### Requirement: Bilingual example comments
-Every comment in the example programs (`examples/*.js`) SHALL be written in English and in German with the same meaning, on lines of its own: the English part starts with `// EN:`, the German part follows directly and starts with `// DE:`. Continuation lines SHALL be indented to line up with the text above.
+Every comment in the example programs (`examples/*.js`) SHALL be written in English and in German with the same meaning, on lines of its own: the English part starts with `// EN:`, the German part follows directly and starts with `// DE:`. Continuation lines SHALL be indented to line up with the text above. Separator lines, which hold only `//` and dashes, MAY frame parts of a program and need no translation.
 
 #### Scenario: Comment pairs
 - **WHEN** any example program is read
@@ -174,6 +195,10 @@ Every comment in the example programs (`examples/*.js`) SHALL be written in Engl
 #### Scenario: Comment without translation
 - **WHEN** a comment in an example program has no English or no German part
 - **THEN** the change is not complete
+
+#### Scenario: Separator line
+- **WHEN** a line holds only `//` followed by dashes
+- **THEN** it counts as a separator, not as a comment that needs a translation
 
 ### Requirement: README title in the extension gallery
 The README title SHALL contain the `pxt.json` name `ledmatrix`, so that the extension gallery's info page shows only its own heading and not the README title a second time.
