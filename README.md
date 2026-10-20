@@ -129,14 +129,6 @@ Formen gibt es auch aus Mustern. Das Muster im 5x5-Block `Muster` (`ledmatrix.gr
 * `wouldOverlap(other, dx, dy)` — würde `other` nach einer Bewegung um dx, dy überlappen (bewegt nichts)
 * `isInside()`, `isOnEdge()` — Begrenzungsrahmen innerhalb / berührt den Rand
 
-### Hinweise
-
-* Der MakeCode-Simulator führt Programme mit dieser Erweiterung aus, zeigt die Matrix aber nicht an (geprüft für Calliope mini 3 und micro:bit).
-* Speicher: etwa 8 Byte RAM pro LED (+1, sobald Kollisionen benutzt werden); höchstens 16x16 auf Calliope mini 1/2 und
-  micro:bit V1. Nur benutzte Blöcke belegen Flash: Der Verdrahtungstest braucht etwa 15 KB, ein Fallende-Blöcke-Spiel 19 KB
-  der 22 KB, die Calliope mini 1/2 für Programme haben (micro:bit V1: 26 KB). Alle Blöcke zusammen brauchen einen mini 3 oder micro:bit V2.
-* Die Blöcke gibt es auf Deutsch und Englisch. Lizenz: MIT.
-
 ### Änderungen
 
 Die Änderungen stehen [hier](https://github.com/waldbaer/pxt-ledmatrix/blob/main/CHANGELOG.md).
@@ -251,14 +243,6 @@ write `ledmatrix.pattern(".#.|###")`: rows split by line breaks or `|`, `.` off,
 * `canMoveBy(dx, dy)` — would stay inside and not touch the drawing layer (doesn't move)
 * `wouldOverlap(other, dx, dy)` — would overlap `other` after moving by dx, dy (doesn't move)
 * `isInside()`, `isOnEdge()` — box inside / touching the border
-
-### Notes
-
-* The MakeCode simulator runs programs that use this extension but doesn't show the matrix (checked for Calliope mini 3 and micro:bit).
-* Memory: about 8 bytes of RAM per LED (+1 once collisions are used); at most 16x16 on Calliope mini 1/2 and
-  micro:bit V1. Only used blocks take flash: the wiring check needs about 15 KB, a falling-blocks game 19 KB of the
-  22 KB Calliope mini 1/2 have for programs (micro:bit V1: 26 KB). Every block at once needs a mini 3 or micro:bit V2.
-* Blocks are available in English and German. License: MIT.
 
 ### Changelog
 
