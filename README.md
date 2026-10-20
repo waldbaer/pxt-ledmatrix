@@ -18,6 +18,26 @@ MakeCode-Blöcke für WS2812- / WS2812B-LED-Matrizen („NeoPixel“) jeder Grö
 
 In MakeCode für Calliope mini oder micro:bit **Erweiterungen** öffnen und `https://github.com/waldbaer/pxt-ledmatrix` einfügen.
 
+### Matrix anschließen
+
+```
+Calliope mini 3                                LED-Matrix
+Stiftleiste von vorne, USB-Buchse oben        +-----------+
+    +-----------------------------------------| 5V        |
+    |                                         |           |
++---+--------------------+                    |           |
+|  VCC  P1   P3   C5 ... |                    |           |
+|  GND  P0   P2   C4 ... |                    |           |
++---+---+----------------+                    |           |
+    |   +-------------------------------------| DIN       |
+    +-----------------------------------------| GND       |
+                                              +-----------+
+```
+
+Die Stiftleiste ist die lange Doppelreihe unten auf dem Calliope mini 3 ([Pinbelegung](https://docs.calliope.cc/tech/hardware/pins/)).
+VCC liefert nur 3,3 V und wenig Strom: Das reicht für erste Versuche mit wenigen, gedimmten LEDs. Für mehr LEDs oder mehr
+Helligkeit statt VCC ein eigenes 5-V-Netzteil an 5V und GND der Matrix anschließen.
+
 ### Schnellstart
 
 ```blocks
@@ -104,13 +124,6 @@ Formen gibt es auch aus Mustern. Das Muster im 5x5-Block `Muster` (`ledmatrix.gr
 * `wouldOverlap(other, dx, dy)` — würde `other` nach einer Bewegung um dx, dy überlappen (bewegt nichts)
 * `isInside()`, `isOnEdge()` — Begrenzungsrahmen innerhalb / berührt den Rand
 
-### Strom und Pins
-
-* Das Panel über ein eigenes 5-V-Netzteil versorgen und sein GND mit dem GND des Boards verbinden. Ein 16x16-Panel
-  braucht ganz weiß etwa 2 A bei der Standardhelligkeit 32 und etwa 15 A bei 255.
-* Den Daten-Pin nicht als Touch-Eingang benutzen: Die Touch-Erkennung stört das LED-Signal.
-* `show()` sendet mit abgeschalteten Interrupts (8 ms für 256 LEDs), das kann Funk, serielle Schnittstelle und Ton stören: mit `basic.pause` takten.
-
 ### Hinweise
 
 * Der MakeCode-Simulator führt Programme mit dieser Erweiterung aus, zeigt die Matrix aber nicht an (geprüft für Calliope mini 3 und micro:bit).
@@ -130,6 +143,26 @@ MakeCode blocks for WS2812 / WS2812B ("NeoPixel") LED matrices of any size and w
 ### Add the extension
 
 In MakeCode for Calliope mini or micro:bit, open **Extensions** and paste `https://github.com/waldbaer/pxt-ledmatrix`.
+
+### Connect the matrix
+
+```
+Calliope mini 3                                LED matrix
+pin header from the front, USB socket on top  +-----------+
+    +-----------------------------------------| 5V        |
+    |                                         |           |
++---+--------------------+                    |           |
+|  VCC  P1   P3   C5 ... |                    |           |
+|  GND  P0   P2   C4 ... |                    |           |
++---+---+----------------+                    |           |
+    |   +-------------------------------------| DIN       |
+    +-----------------------------------------| GND       |
+                                              +-----------+
+```
+
+The pin header is the long double row at the bottom of the Calliope mini 3 ([pinout](https://docs.calliope.cc/tech/hardware/pins/)).
+VCC gives only 3.3 V and little current: enough for first tries with a few dimmed LEDs. For more LEDs or more
+brightness, connect a 5 V power supply to the matrix's 5V and GND instead of VCC.
 
 ### Quick start
 
@@ -210,13 +243,6 @@ write `ledmatrix.pattern(".#.|###")`: rows split by line breaks or `|`, `.` off,
 * `canMoveBy(dx, dy)` — would stay inside and not touch the drawing layer (doesn't move)
 * `wouldOverlap(other, dx, dy)` — would overlap `other` after moving by dx, dy (doesn't move)
 * `isInside()`, `isOnEdge()` — box inside / touching the border
-
-### Power and pins
-
-* Power the panel from its own 5 V supply and connect its GND to the board's GND. A 16x16 panel at full
-  white needs about 2 A at the default brightness 32 and about 15 A at 255.
-* Don't use the data pin as a touch input: touch sensing disturbs the LED signal.
-* `show()` sends with interrupts off (8 ms for 256 LEDs), which can disturb radio, serial and sound: pace it with `basic.pause`.
 
 ### Notes
 
