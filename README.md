@@ -40,6 +40,8 @@ Helligkeit statt VCC ein eigenes 5-V-Netzteil an 5V und GND der Matrix anschlie�
 
 ### Schnellstart
 
+<img src="https://raw.githubusercontent.com/waldbaer/pxt-ledmatrix/main/docs/images/quickstart-hardware.jpg" align="right" width="240" alt="Calliope mini 3 mit 16x16-LED-Matrix, die das Schnellstart-Bild zeigt">
+
 ```blocks
 let matrix = ledmatrix.create(DigitalPin.P0, 16, 16)
 let sonne = matrix.createCircle(12, 3, 2, ledmatrix.colors(LedMatrixColors.Yellow), true)
@@ -53,6 +55,7 @@ matrix.show()
 Das ergibt ein kleines Bild: eine Sonne, den Boden, ein Haus mit der Hausnummer 7 und einen Stern.
 Die Koordinaten beginnen oben links (x nach rechts, y nach unten), egal wie verdrahtet. Die LEDs ändern sich erst bei `show()`.
 Rundgänge in [examples/](https://github.com/waldbaer/pxt-ledmatrix/tree/main/examples): [Einsteiger](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-1.js), [Fortgeschrittene](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-2.js), [Profis](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-3.js).
+<br clear="right">
 
 ### Einrichten
 
@@ -166,6 +169,8 @@ brightness, connect a 5 V power supply to the matrix's 5V and GND instead of VCC
 
 ### Quick start
 
+<img src="https://raw.githubusercontent.com/waldbaer/pxt-ledmatrix/main/docs/images/quickstart-hardware.jpg" align="right" width="240" alt="Calliope mini 3 with a 16x16 LED matrix showing the quick start picture">
+
 ```blocks
 let matrix = ledmatrix.create(DigitalPin.P0, 16, 16)
 let sun = matrix.createCircle(12, 3, 2, ledmatrix.colors(LedMatrixColors.Yellow), true)
@@ -179,6 +184,7 @@ matrix.show()
 This draws a small picture: a sun, the ground, a house with the number 7 and a star.
 Coordinates start top left (x to the right, y down), whatever the wiring. LEDs change only on `show()`.
 Feature tours in [examples/](https://github.com/waldbaer/pxt-ledmatrix/tree/main/examples): [beginner](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-1.js), [intermediate](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-2.js), [advanced](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-3.js).
+<br clear="right">
 
 ### Setup
 
