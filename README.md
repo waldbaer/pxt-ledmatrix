@@ -22,11 +22,15 @@ In MakeCode für Calliope mini oder micro:bit **Erweiterungen** öffnen und `htt
 
 ```blocks
 let matrix = ledmatrix.create(DigitalPin.P0, 16, 16)
-let rahmen = matrix.createRectangle(0, 0, 16, 16, ledmatrix.colors(LedMatrixColors.Blue), false)
-let zahl = matrix.createNumber(42, 5, 5, ledmatrix.colors(LedMatrixColors.Yellow))
+let sonne = matrix.createCircle(12, 3, 2, ledmatrix.colors(LedMatrixColors.Yellow), true)
+let boden = matrix.createLine(0, 15, 15, 15, ledmatrix.colors(LedMatrixColors.Green))
+let haus = matrix.createRectangle(1, 6, 9, 9, ledmatrix.colors(LedMatrixColors.Blue), false)
+let hausnummer = matrix.createNumber(7, 4, 8, ledmatrix.colors(LedMatrixColors.White))
+let stern = matrix.createDot(3, 2, ledmatrix.colors(LedMatrixColors.White))
 matrix.show()
 ```
 
+Das ergibt ein kleines Bild: eine Sonne, den Boden, ein Haus mit der Hausnummer 7 und einen Stern.
 Die Koordinaten beginnen oben links (x nach rechts, y nach unten), egal wie verdrahtet. Die LEDs ändern sich erst bei `show()`.
 Rundgänge in [examples/](https://github.com/waldbaer/pxt-ledmatrix/tree/main/examples): [Einsteiger](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-1.js), [Fortgeschrittene](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-2.js), [Profis](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-3.js).
 
@@ -131,11 +135,15 @@ In MakeCode for Calliope mini or micro:bit, open **Extensions** and paste `https
 
 ```blocks
 let matrix = ledmatrix.create(DigitalPin.P0, 16, 16)
-let border = matrix.createRectangle(0, 0, 16, 16, ledmatrix.colors(LedMatrixColors.Blue), false)
-let number = matrix.createNumber(42, 5, 5, ledmatrix.colors(LedMatrixColors.Yellow))
+let sun = matrix.createCircle(12, 3, 2, ledmatrix.colors(LedMatrixColors.Yellow), true)
+let ground = matrix.createLine(0, 15, 15, 15, ledmatrix.colors(LedMatrixColors.Green))
+let house = matrix.createRectangle(1, 6, 9, 9, ledmatrix.colors(LedMatrixColors.Blue), false)
+let houseNumber = matrix.createNumber(7, 4, 8, ledmatrix.colors(LedMatrixColors.White))
+let star = matrix.createDot(3, 2, ledmatrix.colors(LedMatrixColors.White))
 matrix.show()
 ```
 
+This draws a small picture: a sun, the ground, a house with the number 7 and a star.
 Coordinates start top left (x to the right, y down), whatever the wiring. LEDs change only on `show()`.
 Feature tours in [examples/](https://github.com/waldbaer/pxt-ledmatrix/tree/main/examples): [beginner](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-1.js), [intermediate](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-2.js), [advanced](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-3.js).
 
