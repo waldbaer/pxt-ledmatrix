@@ -60,6 +60,21 @@ The repository SHALL contain the GitHub Actions workflow `.github/workflows/test
 - **WHEN** a pull request makes a check in `test.ts` fail in a simulator
 - **THEN** the workflow fails and its log shows the message of the failed check
 
+### Requirement: Programs build in CI
+The continuous build workflow SHALL build every program in `docs/examples/` for the Calliope mini 3 and the micro:bit. A program whose first comment says it runs on the Calliope mini 1 and 2 SHALL also be built for those. Every program in `docs/courses/solutions/` SHALL be built for the Calliope mini 1, 2 and 3. A failed build SHALL fail the workflow.
+
+#### Scenario: Broken example
+- **WHEN** a pushed commit makes any program in `docs/examples/` or `docs/courses/solutions/` fail to compile for one of its boards
+- **THEN** the workflow fails and its log names the program and the board
+
+#### Scenario: Boards from the first comment
+- **WHEN** the workflow builds `feature-tour-1.js`, which says it runs on the Calliope mini 1, 2 and 3 and the micro:bit, and `feature-tour-2.js`, which says it is too big for the mini 1 and 2
+- **THEN** it builds tour 1 for all four boards and tour 2 only for the Calliope mini 3 and the micro:bit
+
+#### Scenario: New program
+- **WHEN** a new `.js` file is added to `docs/examples/` or `docs/courses/solutions/`
+- **THEN** the workflow builds it without any change to the workflow
+
 ### Requirement: German blocks
 Every block, block parameter label, enum value and documentation comment of the extension SHALL have a German translation in `_locales/de`. In an editor set to German, the blocks SHALL appear in German. The one exception is the caption above a number slider: MakeCode builds it from the TypeScript parameter name and offers no way to translate it.
 
@@ -95,7 +110,7 @@ A block that creates something SHALL propose a German variable when it is dragge
 - **THEN** the block sits in "set kreis to"
 
 ### Requirement: Compact README
-Each of the two language sections of `README.md` SHALL be at most 110 lines, not counting the MakeCode embed script line. Each SHALL cover: adding the extension, a quick start with the default layout, the layout settings with chain diagrams, a wiring troubleshooting table that refers to the example, a one-line-per-function API overview by group, and power and pin notes.
+Each of the two language sections of `README.md` SHALL be at most 130 lines, not counting the MakeCode embed script line. Each SHALL cover: adding the extension, a quick start with the default layout, the layout settings with chain diagrams, a wiring troubleshooting table that refers to the example, a one-line-per-function API overview by group, power and pin notes, and a link to the course.
 
 #### Scenario: Adding the extension
 - **WHEN** a reader wants to use the extension
@@ -109,9 +124,13 @@ Each of the two language sections of `README.md` SHALL be at most 110 lines, not
 - **WHEN** a reader's panel shows a garbled picture
 - **THEN** each section maps each symptom of the wiring-check example (square splits, wrong corner, wrong direction) to the setting to change
 
+#### Scenario: Course link
+- **WHEN** a teacher looks for lessons
+- **THEN** each section links `docs/courses/` on GitHub, which holds the worksheets and solutions
+
 #### Scenario: Line count
 - **WHEN** the lines from `## Deutsch` to `## English` and from `## English` to the metadata lines are counted
-- **THEN** each count is at most 110
+- **THEN** each count is at most 130
 
 ### Requirement: README in German and English
 `README.md` SHALL start with its title and badges, followed by one line with jump links to the German and the English section. The German section SHALL come first, then the English section with the same content. Function and parameter names stay English in both. Variables in the German code examples SHALL be German. The README SHALL end with the MakeCode search metadata lines, which belong to neither section.
@@ -144,7 +163,7 @@ The README SHALL describe the MakeCode simulator's behavior with the extension o
 - **THEN** the README states that the matrix is not shown in the simulator
 
 ### Requirement: Wiring-check example
-The repository SHALL contain `examples/wiring-check.js`. Its first comment SHALL say what it is for: running it first on a new panel to find the layout and color order settings. It creates a 16x16 matrix on P0 with the default layout, with size and pin in variables at the top. A 2x2 square walks clockwise along the edges from the top-left: red along the top, green down the right, blue along the bottom, yellow up the left. The finished laps are shown centered by a number shape.
+The repository SHALL contain `docs/examples/wiring-check.js`. Its first comment SHALL say what it is for: running it first on a new panel to find the layout and color order settings. It creates a 16x16 matrix on P0 with the default layout, with size and pin in variables at the top. A 2x2 square walks clockwise along the edges from the top-left: red along the top, green down the right, blue along the bottom, yellow up the left. The finished laps are shown centered by a number shape.
 
 #### Scenario: Correct wiring
 - **WHEN** the example runs on a panel whose layout matches the settings
@@ -155,17 +174,17 @@ The repository SHALL contain `examples/wiring-check.js`. Its first comment SHALL
 - **THEN** its first comment says to run it first on a new panel, to find the layout and color order settings the panel needs
 
 ### Requirement: Example is plain JavaScript
-Every example program in `examples/` SHALL be valid both as plain JavaScript and in the MakeCode JavaScript editor. It SHALL contain no type annotations and no helper functions with parameters, and it SHALL compile as a MakeCode program that depends on the extension.
+Every example program in `docs/examples/` and every course solution in `docs/courses/solutions/` SHALL be valid both as plain JavaScript and in the MakeCode JavaScript editor. It SHALL contain no type annotations and no helper functions with parameters, and it SHALL compile as a MakeCode program that depends on the extension.
 
 #### Scenario: Compile check
-- **WHEN** any example program is copied into a MakeCode project that depends on this extension and built for the Calliope mini 3
+- **WHEN** any example program or course solution is copied into a MakeCode project that depends on this extension and built for the Calliope mini 3
 - **THEN** the build succeeds without errors
 
 ### Requirement: Three feature tours
-`examples/` SHALL contain three feature tours: `feature-tour-1.js` (beginner), `feature-tour-2.js` (intermediate) and `feature-tour-3.js` (advanced). Each runs its scenes in a loop on a 16x16 matrix on P0 with the default layout, with size and pin in variables at the top, and never sets the matrix brightness above the default 32. Each tour's first comment SHALL name its level and the boards it runs on. The README SHALL link all three.
+`docs/examples/` SHALL contain three feature tours: `feature-tour-1.js` (beginner), `feature-tour-2.js` (intermediate) and `feature-tour-3.js` (advanced). Each runs its scenes in a loop on a 16x16 matrix on P0 with the default layout, with size and pin in variables at the top, and never sets the matrix brightness above the default 32. Each tour's first comment SHALL name its level and the boards it runs on. The README SHALL link all three.
 
 #### Scenario: Tour files
-- **WHEN** `examples/` is listed
+- **WHEN** `docs/examples/` is listed
 - **THEN** it contains `feature-tour-1.js`, `feature-tour-2.js` and `feature-tour-3.js`, and none of `feature-tour-beginner.js`, `feature-tour-intermediate.js` and `feature-tour-advanced.js`
 
 #### Scenario: Level and board hint
@@ -239,14 +258,14 @@ The beginner tour SHALL be readable for a 12-year-old with little programming ex
 - **THEN** a comment directly above it says what the step does
 
 ### Requirement: Bilingual example comments
-Every comment in the example programs (`examples/*.js`) SHALL be written in German and in English with the same meaning, on lines of its own: the German part starts with `// DE:`, the English part follows directly and starts with `// EN:`. Continuation lines SHALL be indented to line up with the text above. Separator lines, which hold only `//` and dashes, MAY frame parts of a program and need no translation.
+Every comment in the example programs (`docs/examples/*.js`) and the course solutions (`docs/courses/solutions/*.js`) SHALL be written in German and in English with the same meaning, on lines of its own: the German part starts with `// DE:`, the English part follows directly and starts with `// EN:`. Continuation lines SHALL be indented to line up with the text above. Separator lines, which hold only `//` and dashes, MAY frame parts of a program and need no translation.
 
 #### Scenario: Comment pairs
-- **WHEN** any example program is read
+- **WHEN** any example program or course solution is read
 - **THEN** every comment is a `// DE:` part followed directly by an `// EN:` part
 
 #### Scenario: Comment without translation
-- **WHEN** a comment in an example program has no German or no English part
+- **WHEN** a comment in an example program or course solution has no German or no English part
 - **THEN** the change is not complete
 
 #### Scenario: Separator line

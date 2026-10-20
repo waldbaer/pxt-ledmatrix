@@ -54,7 +54,7 @@ matrix.show()
 
 Das ergibt ein kleines Bild: eine Sonne, den Boden, ein Haus mit der Hausnummer 7 und einen Stern.
 Die Koordinaten beginnen oben links (x nach rechts, y nach unten), egal wie verdrahtet. Die LEDs ändern sich erst bei `show()`.
-Rundgänge in [examples/](https://github.com/waldbaer/pxt-ledmatrix/tree/main/examples): [Einsteiger](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-1.js), [Fortgeschrittene](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-2.js), [Profis](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-3.js).
+Rundgänge in [docs/examples/](https://github.com/waldbaer/pxt-ledmatrix/tree/main/docs/examples): [Einsteiger](https://github.com/waldbaer/pxt-ledmatrix/blob/main/docs/examples/feature-tour-1.js), [Fortgeschrittene](https://github.com/waldbaer/pxt-ledmatrix/blob/main/docs/examples/feature-tour-2.js), [Profis](https://github.com/waldbaer/pxt-ledmatrix/blob/main/docs/examples/feature-tour-3.js). Übungen mit Lösungen für die Schule: [docs/courses/](https://github.com/waldbaer/pxt-ledmatrix/tree/main/docs/courses).
 <br clear="right">
 
 ### Einrichten
@@ -84,7 +84,7 @@ Spalten, Zickzack (Standard)   Spalten, gleiche Richtung
 
 ### Verdrahtungstest
 
-[examples/wiring-check.js](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/wiring-check.js) mit deiner Größe und deinem Pin (oben in der Datei) starten. Ein
+[docs/examples/wiring-check.js](https://github.com/waldbaer/pxt-ledmatrix/blob/main/docs/examples/wiring-check.js) mit deiner Größe und deinem Pin (oben in der Datei) starten. Ein
 2x2-Quadrat sollte im Uhrzeigersinn von oben links um eine Rundenzahl laufen (oben rot, rechts grün, unten blau, links gelb).
 
 | Was du siehst | Was du änderst |
@@ -183,7 +183,7 @@ matrix.show()
 
 This draws a small picture: a sun, the ground, a house with the number 7 and a star.
 Coordinates start top left (x to the right, y down), whatever the wiring. LEDs change only on `show()`.
-Feature tours in [examples/](https://github.com/waldbaer/pxt-ledmatrix/tree/main/examples): [beginner](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-1.js), [intermediate](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-2.js), [advanced](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/feature-tour-3.js).
+Feature tours in [docs/examples/](https://github.com/waldbaer/pxt-ledmatrix/tree/main/docs/examples): [beginner](https://github.com/waldbaer/pxt-ledmatrix/blob/main/docs/examples/feature-tour-1.js), [intermediate](https://github.com/waldbaer/pxt-ledmatrix/blob/main/docs/examples/feature-tour-2.js), [advanced](https://github.com/waldbaer/pxt-ledmatrix/blob/main/docs/examples/feature-tour-3.js). Exercises with solutions for schools: [docs/courses/](https://github.com/waldbaer/pxt-ledmatrix/tree/main/docs/courses).
 <br clear="right">
 
 ### Setup
@@ -207,7 +207,7 @@ rows, zig-zag   rows, same dir.   columns, zig-zag (default)   columns, same dir
 
 ### Wiring check
 
-Run [examples/wiring-check.js](https://github.com/waldbaer/pxt-ledmatrix/blob/main/examples/wiring-check.js) with your size and pin set at its top. A 2x2 square
+Run [docs/examples/wiring-check.js](https://github.com/waldbaer/pxt-ledmatrix/blob/main/docs/examples/wiring-check.js) with your size and pin set at its top. A 2x2 square
 should walk clockwise from the top left (red top, green right, blue bottom, yellow left) around a lap count.
 
 | What you see | What to change |

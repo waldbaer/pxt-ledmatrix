@@ -1,6 +1,8 @@
 # Workflow for building and testing pxt-ledmatrix using GitHub Actions.
 # The workflow builds the extension with its tests for the Calliope mini and
-# the micro:bit, then runs the tests in both MakeCode simulators.
+# the micro:bit, then runs the tests in both MakeCode simulators. It also
+# builds every example and course solution for the boards it runs on
+# (see docs/examples/build-all.sh).
 #
 # Tests that need real LEDs still need a run on a board (see test.ts).
 name: CI Test
@@ -63,3 +65,21 @@ jobs:
 
     - name: Run tests in the ${{ matrix.target }} simulator
       run: node .github/scripts/sim-test.js ${{ matrix.config }}
+
+  programs:
+    name: build examples and course solutions
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ env.NODEJS_DEFAULT_VERSION }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODEJS_DEFAULT_VERSION }}
+
+    - name: Build every program for its boards
+      run: docs/examples/build-all.sh
+      env:
+        MKC: npx --yes ${{ env.MAKECODE_CLI }}

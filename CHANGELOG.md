@@ -1,13 +1,22 @@
 # Changelog
 
-## [0.3.0]
+## [0.4.0]
+
+### Features
+- School course in `docs/courses/`: ten exercises in German and English, each with a solution and an Extra solution.
+- `build-and-flash.sh -b` builds without flashing; CI builds every example and solution.
+
+### Changes
+- German first: blocks propose German variables (`rechteck`, `kreis`, …); README, `pxt.json` description and example comments in German and English.
+- README quick start shows a photo of the hardware.
+- Examples moved to `docs/examples/`.
+
+## [0.3.0] - 2026-10-18
 
 ### Changes
 - **Breaking:** `drawLine`, `drawRectangle`, `drawCircle`, `drawPattern` and `drawNumber` are removed. Create the shape instead, `stamp()` it into the drawing and `remove()` it.
 - The `stamp` block moved from Collisions to the Draw group.
 - The feature tours are rewritten, shorter, and renamed `feature-tour-1.js` (beginner), `feature-tour-2.js` (intermediate) and `feature-tour-3.js` (advanced).
-- Blocks propose German variables in every editor language: `rechteck`, `kreis`, `linie`, `punkt`, `muster`, `zahl`.
-- README and `pxt.json` description in German and English; example comments German first.
 
 ## [0.2.0] - 2026-10-15
 
