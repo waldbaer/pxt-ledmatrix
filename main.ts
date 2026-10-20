@@ -354,7 +354,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_create_rect block="%matrix|rectangle at x %x|y %y|width %width|height %height|color %color=ledmatrix_colors|filled %filled"
         //% matrix.defl=matrix filled.shadow=toggleOnOff inlineInputMode=inline
-        //% blockSetVariable=shape
+        //% blockSetVariable=rechteck
         //% group="Shapes" weight=100 blockGap=8
         createRectangle(x: number, y: number, width: number, height: number, color: number, filled: boolean): Shape {
             return this._addShape(new Shape(this, _SHAPE_RECT, x, y, width, height, color, filled))
@@ -369,7 +369,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_create_circle block="%matrix|circle at x %x|y %y|radius %radius|color %color=ledmatrix_colors|filled %filled"
         //% matrix.defl=matrix filled.shadow=toggleOnOff inlineInputMode=inline
-        //% blockSetVariable=shape
+        //% blockSetVariable=kreis
         //% group="Shapes" weight=98 blockGap=8
         createCircle(x: number, y: number, radius: number, color: number, filled: boolean): Shape {
             return this._addShape(new Shape(this, _SHAPE_CIRCLE, x, y, radius, 0, color, filled))
@@ -384,7 +384,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_create_line block="%matrix|line from x %x0|y %y0|to x %x1|y %y1|color %color=ledmatrix_colors"
         //% matrix.defl=matrix inlineInputMode=inline
-        //% blockSetVariable=shape
+        //% blockSetVariable=linie
         //% group="Shapes" weight=96 blockGap=8
         createLine(x0: number, y0: number, x1: number, y1: number, color: number): Shape {
             x0 = x0 | 0
@@ -399,7 +399,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_create_dot block="%matrix|dot at x %x|y %y|color %color=ledmatrix_colors"
         //% matrix.defl=matrix
-        //% blockSetVariable=shape
+        //% blockSetVariable=punkt
         //% group="Shapes" weight=94 blockGap=8
         createDot(x: number, y: number, color: number): Shape {
             return this._addShape(new Shape(this, _SHAPE_DOT, x, y, 0, 0, color, false))
@@ -413,7 +413,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_create_pattern block="%matrix|%pattern=ledmatrix_grid|at x %x|y %y|color %color=ledmatrix_colors"
         //% matrix.defl=matrix inlineInputMode=inline
-        //% blockSetVariable=shape
+        //% blockSetVariable=muster
         //% group="Shapes" weight=92 blockGap=8
         createPattern(pattern: Pattern, x: number, y: number, color: number): Shape {
             const s = new Shape(this, _SHAPE_PATTERN, x, y, 0, 0, color, false)
@@ -430,7 +430,7 @@ namespace ledmatrix {
          */
         //% blockId=ledmatrix_create_number block="%matrix|number %value|at x %x|y %y|color %color=ledmatrix_colors"
         //% matrix.defl=matrix inlineInputMode=inline
-        //% blockSetVariable=number
+        //% blockSetVariable=zahl
         //% group="Text" weight=90 blockGap=8
         createNumber(value: number, x: number, y: number, color: number): Shape {
             const s = new Shape(this, _SHAPE_NUMBER, x, y, 0, 0, color, false)

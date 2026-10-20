@@ -1,12 +1,3 @@
-// EN: Feature tour 3, advanced: the advanced blocks and two small games made
-//     from shapes and collision queries, in a loop. The games paint no pixel
-//     by hand.
-//     Runs on the Calliope mini 3 and the micro:bit; too big for the mini 1 and 2.
-//       1 secrets of the matrix: the LED chain, and reading the drawing
-//       2 invaders: two invaders march and descend; a cannon aims by itself
-//         and shoots them
-//       3 pong: two paddles steer themselves, the ball bounces off them and
-//         off stamped walls, and number shapes count the points
 // DE: Rundgang 3, für Profis: die Blöcke unter "mehr" und zwei kleine Spiele
 //     aus Formen und Kollisionsabfragen, in einer Schleife. Die Spiele malen
 //     kein Pixel von Hand.
@@ -16,6 +7,15 @@
 //         zielt von selbst und schießt sie ab
 //       3 Pong: zwei Schläger steuern sich selbst, der Ball prallt von ihnen
 //         und von gestempelten Wänden ab, und Zahl-Formen zählen die Punkte
+// EN: Feature tour 3, advanced: the advanced blocks and two small games made
+//     from shapes and collision queries, in a loop. The games paint no pixel
+//     by hand.
+//     Runs on the Calliope mini 3 and the micro:bit; too big for the mini 1 and 2.
+//       1 secrets of the matrix: the LED chain, and reading the drawing
+//       2 invaders: two invaders march and descend; a cannon aims by itself
+//         and shoots them
+//       3 pong: two paddles steer themselves, the ball bounces off them and
+//         off stamped walls, and number shapes count the points
 
 let WIDTH = 16
 let HEIGHT = 16
@@ -29,8 +29,8 @@ let invaderA = ledmatrix.pattern(". g g g .|g r g r g|g g g g g|g . . . g")
 let invaderB = ledmatrix.pattern(". g g g .|g r g r g|g g g g g|. g . g .")
 let boom = ledmatrix.pattern("o . y . o|. y o y .|y o . o y|. y o y .|o . y . o")
 
-// EN: starts the next scene: takes everything away and shows the scene number
 // DE: startet die nächste Szene: räumt alles weg und zeigt die Nummer der Szene
+// EN: starts the next scene: takes everything away and shows the scene number
 function nextScene() {
     scene++
     matrix.removeAllShapes()
@@ -53,16 +53,16 @@ function frame() {
     basic.pause(40)
 }
 
-// EN: Scene 1: secrets of the matrix
 // DE: Szene 1: Geheimnisse der Matrix
+// EN: Scene 1: secrets of the matrix
 function secretsScene() {
     nextScene()
-    // EN: each LED gets a color from its number in the chain, from blue (first)
-    //     to red (last), so the colors follow the wiring: down the first
-    //     column, up the next one, ...
     // DE: jede LED bekommt eine Farbe aus ihrer Nummer in der Kette, von blau
     //     (erste) bis rot (letzte), also folgen die Farben der Verdrahtung: die
     //     erste Spalte hinunter, die nächste hinauf, ...
+    // EN: each LED gets a color from its number in the chain, from blue (first)
+    //     to red (last), so the colors follow the wiring: down the first
+    //     column, up the next one, ...
     for (let x = 0; x < WIDTH; x++) {
         for (let y = 0; y < HEIGHT; y++) {
             matrix.setPixel(x, y, ledmatrix.rgb(matrix.ledIndex(x, y), 0, 255 - matrix.ledIndex(x, y)))
@@ -78,10 +78,10 @@ function secretsScene() {
     }
     let chameleon = matrix.createDot(0, 8, ledmatrix.colors(LedMatrixColors.White))
     step()
-    // EN: the chameleon takes the color of the drawing above it; getPixel
-    //     reads only the drawing, not the shapes
     // DE: das Chamäleon nimmt die Farbe der Zeichnung über ihm an; getPixel
     //     liest nur die Zeichnung, nicht die Formen
+    // EN: the chameleon takes the color of the drawing above it; getPixel
+    //     reads only the drawing, not the shapes
     while (chameleon.x() < WIDTH) {
         chameleon.setColor(matrix.getPixel(chameleon.x(), 6))
         frame()
@@ -90,8 +90,8 @@ function secretsScene() {
     }
 }
 
-// EN: Scene 2: invaders
 // DE: Szene 2: Invaders
+// EN: Scene 2: invaders
 function invadersScene() {
     nextScene()
     let invaders = [matrix.createPattern(invaderA, 1, 1, 0), matrix.createPattern(invaderA, 8, 1, 0)]
@@ -103,10 +103,10 @@ function invadersScene() {
     let flying = false
     let dir = 1
     for (t = 0; t < 300; t++) {
-        // EN: march every 6 frames, switching between the two pictures; at
-        //     the side, all turn and step down
         // DE: alle 6 Bilder ein Schritt, im Wechsel zwischen den zwei Bildern;
         //     am Rand drehen alle um und gehen eine Zeile tiefer
+        // EN: march every 6 frames, switching between the two pictures; at
+        //     the side, all turn and step down
         if (t % 6 == 0) {
             let turn = false
             for (let i = 0; i < 2; i++) {
@@ -126,10 +126,10 @@ function invadersScene() {
                 dir = -dir
             }
         }
-        // EN: the cannon steers below the first invader that is alive and
-        //     fires when it is there
         // DE: die Kanone fährt unter den ersten Invader, der noch lebt, und
         //     schießt, wenn sie dort ist
+        // EN: the cannon steers below the first invader that is alive and
+        //     fires when it is there
         let target = alive[0] ? 0 : 1
         if (alive[target]) {
             let aim = invaders[target].x() + Math.idiv(invaders[target].width(), 2)
@@ -152,17 +152,17 @@ function invadersScene() {
                     flying = false
                 }
             }
-            // EN: a shot that left the matrix is gone
             // DE: ein Schuss, der die Matrix verlassen hat, ist weg
+            // EN: a shot that left the matrix is gone
             if (!shot.isInside()) {
                 flying = false
             }
         }
         shot.setVisible(flying)
-        // EN: explosions vanish after 8 frames; a new wave comes when both are
-        //     gone or one has reached the cannon
         // DE: Explosionen verschwinden nach 8 Bildern; eine neue Welle kommt,
         //     wenn beide weg sind oder einer die Kanone erreicht hat
+        // EN: explosions vanish after 8 frames; a new wave comes when both are
+        //     gone or one has reached the cannon
         let left = 0
         let landed = false
         for (let i = 0; i < 2; i++) {
@@ -189,14 +189,14 @@ function invadersScene() {
     }
 }
 
-// EN: Scene 3: pong
 // DE: Szene 3: Pong
+// EN: Scene 3: pong
 function pongScene() {
     nextScene()
-    // EN: walls at the top and the bottom: a line shape stamped twice into the
-    //     drawing, so canMoveBy sees them
     // DE: Wände oben und unten: eine Linien-Form, zweimal in die Zeichnung
     //     gestempelt, damit canMoveBy sie sieht
+    // EN: walls at the top and the bottom: a line shape stamped twice into the
+    //     drawing, so canMoveBy sees them
     let wall = matrix.createLine(0, 0, WIDTH - 1, 0, ledmatrix.colors(LedMatrixColors.Blue))
     wall.stamp()
     wall.setPosition(0, HEIGHT - 1)
@@ -209,16 +209,16 @@ function pongScene() {
     let rightPoints = 0
     let leftScore = matrix.createNumber(0, 3, 2, ledmatrix.rgb(80, 0, 0))
     let rightScore = matrix.createNumber(0, WIDTH - 6, 2, ledmatrix.rgb(0, 80, 0))
-    // EN: the scores came later and would cover the ball: bring it to the front
     // DE: die Punkte kamen später und würden den Ball verdecken: hol ihn nach vorne
+    // EN: the scores came later and would cover the ball: bring it to the front
     ball.bringToFront()
     let dx = 1
     let dy = 1
     for (t = 0; t < 900 && leftPoints < 5 && rightPoints < 5; t++) {
-        // EN: the paddle the ball flies towards follows it, but misses a move
-        //     now and then (1 frame in 10), so it does not catch every ball
         // DE: der Schläger, auf den der Ball zufliegt, folgt ihm, setzt aber ab
         //     und zu aus (1 von 10 Bildern) und fängt deshalb nicht jeden Ball
+        // EN: the paddle the ball flies towards follows it, but misses a move
+        //     now and then (1 frame in 10), so it does not catch every ball
         let paddle = dx < 0 ? leftPaddle : rightPaddle
         let middle = paddle.y() + Math.idiv(paddle.height(), 2)
         if (Math.randomRange(0, 9) > 0) {
@@ -228,8 +228,8 @@ function pongScene() {
                 paddle.moveBy(0, -1)
             }
         }
-        // EN: bounce off the walls in the drawing and off the paddle shapes
         // DE: an den Wänden in der Zeichnung und an den Schläger-Formen abprallen
+        // EN: bounce off the walls in the drawing and off the paddle shapes
         if (!ball.canMoveBy(0, dy)) {
             dy = -dy
         }
@@ -237,11 +237,11 @@ function pongScene() {
             dx = -dx
         }
         ball.moveBy(dx, dy)
-        // EN: the walls keep the ball off the top and bottom edge, so on an
-        //     edge it got past a paddle: a point for the other side
         // DE: die Wände halten den Ball vom oberen und unteren Rand fern; an
         //     einem Rand ist er also an einem Schläger vorbei: ein Punkt für
         //     die andere Seite
+        // EN: the walls keep the ball off the top and bottom edge, so on an
+        //     edge it got past a paddle: a point for the other side
         if (ball.isOnEdge()) {
             if (ball.x() <= 0) {
                 rightPoints++

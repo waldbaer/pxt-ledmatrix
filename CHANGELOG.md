@@ -6,6 +6,8 @@
 - **Breaking:** `drawLine`, `drawRectangle`, `drawCircle`, `drawPattern` and `drawNumber` are removed. Create the shape instead, `stamp()` it into the drawing and `remove()` it.
 - The `stamp` block moved from Collisions to the Draw group.
 - The feature tours are rewritten, shorter, and renamed `feature-tour-1.js` (beginner), `feature-tour-2.js` (intermediate) and `feature-tour-3.js` (advanced).
+- Blocks propose German variables in every editor language: `rechteck`, `kreis`, `linie`, `punkt`, `muster`, `zahl`.
+- README and `pxt.json` description in German and English; example comments German first.
 
 ## [0.2.0] - 2026-10-15
 
