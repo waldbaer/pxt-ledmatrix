@@ -49,7 +49,7 @@ namespace ledmatrix {
          * @param dy pixels down (negative = up), eg: 0
          */
         //% blockId=ledmatrix_shape_move block="%shape|move by x %dx|y %dy"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Shapes" weight=80 blockGap=8
         moveBy(dx: number, dy: number): void {
             this._x += dx | 0
@@ -64,7 +64,7 @@ namespace ledmatrix {
          * @param y row, eg: 0
          */
         //% blockId=ledmatrix_shape_set_pos block="%shape|set position x %x|y %y"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Shapes" weight=75 blockGap=8
         setPosition(x: number, y: number): void {
             this._x = x | 0
@@ -76,7 +76,7 @@ namespace ledmatrix {
          * Horizontal position of the shape.
          */
         //% blockId=ledmatrix_shape_x block="%shape|x"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Shapes" weight=70 blockGap=8
         x(): number {
             return this._x
@@ -86,7 +86,7 @@ namespace ledmatrix {
          * Vertical position of the shape.
          */
         //% blockId=ledmatrix_shape_y block="%shape|y"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Shapes" weight=69
         y(): number {
             return this._y
@@ -97,7 +97,7 @@ namespace ledmatrix {
          * color letter keep it.
          */
         //% blockId=ledmatrix_shape_set_color block="%shape|set color %color=ledmatrix_colors"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Shapes" weight=60 blockGap=8
         setColor(color: number): void {
             this._color = color
@@ -113,7 +113,7 @@ namespace ledmatrix {
          * @param brightness brightness from 0 to 255, eg: 128
          */
         //% blockId=ledmatrix_shape_set_brightness block="%shape|set brightness %brightness"
-        //% shape.defl=shape brightness.min=0 brightness.max=255
+        //% shape.defl=rechteck brightness.min=0 brightness.max=255
         //% group="Shapes" weight=58 blockGap=8
         setBrightness(brightness: number): void {
             this._brightness = Math.clamp(0, 255, brightness | 0)
@@ -125,7 +125,7 @@ namespace ledmatrix {
          * @param on visible if true
          */
         //% blockId=ledmatrix_shape_set_visible block="%shape|visible %on"
-        //% shape.defl=shape on.shadow=toggleOnOff
+        //% shape.defl=rechteck on.shadow=toggleOnOff
         //% group="Shapes" weight=55
         setVisible(on: boolean): void {
             this._visible = on
@@ -136,7 +136,7 @@ namespace ledmatrix {
          * Draw this shape above all others.
          */
         //% blockId=ledmatrix_shape_front block="%shape|bring to front"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Shapes" weight=40 advanced=true
         bringToFront(): void {
             const list = this._m._shapes
@@ -149,7 +149,7 @@ namespace ledmatrix {
          * Pixels it already stamped into the drawing stay.
          */
         //% blockId=ledmatrix_shape_remove block="%shape|delete"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Shapes" weight=50 blockGap=8
         remove(): void {
             this._removed = true
@@ -165,7 +165,7 @@ namespace ledmatrix {
          * @param direction right = clockwise, left = counter-clockwise
          */
         //% blockId=ledmatrix_shape_rotate block="%shape|rotate %direction"
-        //% shape.defl=shape
+        //% shape.defl=muster
         //% group="Shapes" weight=66 blockGap=8
         rotate(direction: LedMatrixRotation): void {
             if (this._kind != _SHAPE_PATTERN) return
@@ -182,7 +182,7 @@ namespace ledmatrix {
          * @param axis horizontally = left and right swap, vertically = top and bottom swap
          */
         //% blockId=ledmatrix_shape_flip block="%shape|flip %axis"
-        //% shape.defl=shape
+        //% shape.defl=muster
         //% group="Shapes" weight=65
         flip(axis: LedMatrixFlip): void {
             if (this._kind != _SHAPE_PATTERN) return
@@ -195,7 +195,7 @@ namespace ledmatrix {
          * Other shapes don't change.
          */
         //% blockId=ledmatrix_shape_set_pattern block="%shape|set pattern %pattern=ledmatrix_grid"
-        //% shape.defl=shape
+        //% shape.defl=muster
         //% group="Shapes" weight=64 advanced=true
         setPattern(pattern: Pattern): void {
             if (this._kind != _SHAPE_PATTERN || !pattern) return
@@ -209,7 +209,7 @@ namespace ledmatrix {
          * @param value the new number, eg: 0
          */
         //% blockId=ledmatrix_shape_set_number block="%number|set number to %value"
-        //% number.defl=number
+        //% number.defl=zahl
         //% group="Text" weight=80
         setNumber(value: number): void {
             if (this._kind != _SHAPE_NUMBER) return
@@ -221,7 +221,7 @@ namespace ledmatrix {
          * Width of the shape in pixels.
          */
         //% blockId=ledmatrix_shape_width block="%shape|width"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Shapes" weight=68 blockGap=8 advanced=true
         width(): number {
             return this._right() - this._left() + 1
@@ -231,7 +231,7 @@ namespace ledmatrix {
          * Height of the shape in pixels.
          */
         //% blockId=ledmatrix_shape_height block="%shape|height"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Shapes" weight=67 advanced=true
         height(): number {
             return this._bottom() - this._top() + 1
@@ -244,7 +244,7 @@ namespace ledmatrix {
          * of the other shape. Hidden and deleted shapes never overlap.
          */
         //% blockId=ledmatrix_shape_overlaps block="%shape|overlaps %other"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Collisions" weight=100 blockGap=8
         overlaps(other: Shape): boolean {
             if (!other || other == this || !this._live() || !other._live() || other._m != this._m) return false
@@ -265,7 +265,7 @@ namespace ledmatrix {
          * (e.g. pieces that were stamped).
          */
         //% blockId=ledmatrix_shape_touches_drawing block="%shape|touches drawing"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Collisions" weight=95 blockGap=8
         touchesDrawing(): boolean {
             if (!this._live()) return false
@@ -282,7 +282,7 @@ namespace ledmatrix {
          * @param dy pixels down (negative = up), eg: 1
          */
         //% blockId=ledmatrix_shape_can_move block="%shape|can move by x %dx|y %dy"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Collisions" weight=90 blockGap=8
         canMoveBy(dx: number, dy: number): boolean {
             dx = dx | 0
@@ -304,7 +304,7 @@ namespace ledmatrix {
          * @param dy pixels down (negative = up), eg: 1
          */
         //% blockId=ledmatrix_shape_would_overlap block="%shape|would overlap %other|if moved by x %dx|y %dy"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Collisions" weight=89 blockGap=8
         wouldOverlap(other: Shape, dx: number, dy: number): boolean {
             if (!other) return false
@@ -322,7 +322,7 @@ namespace ledmatrix {
          * True if the whole shape is inside the matrix.
          */
         //% blockId=ledmatrix_shape_inside block="%shape|is inside"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Collisions" weight=85 blockGap=8
         isInside(): boolean {
             return this._left() >= 0 && this._top() >= 0
@@ -333,7 +333,7 @@ namespace ledmatrix {
          * True if any part of the shape touches or crosses the edge of the matrix.
          */
         //% blockId=ledmatrix_shape_on_edge block="%shape|is on edge"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Collisions" weight=80
         isOnEdge(): boolean {
             return this._left() <= 0 || this._top() <= 0
@@ -350,7 +350,7 @@ namespace ledmatrix {
          * and "touches drawing". Hidden shapes are not stamped.
          */
         //% blockId=ledmatrix_shape_stamp block="%shape|stamp into drawing"
-        //% shape.defl=shape
+        //% shape.defl=rechteck
         //% group="Draw" weight=90 blockGap=8
         stamp(): void {
             if (!this._live()) return

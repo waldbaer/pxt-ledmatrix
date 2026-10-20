@@ -1,11 +1,3 @@
-// EN: Wiring check for a WS2812B LED matrix. Run it first on a new panel:
-//     it shows which layout (setLayout) and color order (setColorOrder)
-//     your panel needs. Set your size and pin below.
-//     A 2x2 square walks clockwise along the edges, starting top left: red
-//     along the top, green down the right, blue along the bottom, yellow up
-//     the left. The number in the middle counts the finished laps.
-//     If the square splits, starts in another corner, goes the wrong way, or
-//     red and green are swapped, see the troubleshooting table in the README.
 // DE: Verdrahtungstest für eine WS2812B-LED-Matrix. Lass ihn zuerst auf
 //     einem neuen Panel laufen: Er zeigt, welche Verdrahtung (setLayout) und
 //     welche Farbreihenfolge (setColorOrder) dein Panel braucht. Trage unten
@@ -16,6 +8,14 @@
 //     Wenn das Quadrat zerfällt, in einer anderen Ecke beginnt, falsch herum
 //     läuft oder rot und grün vertauscht sind, hilft die Tabelle zur
 //     Fehlersuche im README.
+// EN: Wiring check for a WS2812B LED matrix. Run it first on a new panel:
+//     it shows which layout (setLayout) and color order (setColorOrder)
+//     your panel needs. Set your size and pin below.
+//     A 2x2 square walks clockwise along the edges, starting top left: red
+//     along the top, green down the right, blue along the bottom, yellow up
+//     the left. The number in the middle counts the finished laps.
+//     If the square splits, starts in another corner, goes the wrong way, or
+//     red and green are swapped, see the troubleshooting table in the README.
 
 let WIDTH = 16
 let HEIGHT = 16
@@ -29,10 +29,10 @@ let maxY = HEIGHT - 2
 let laps = 0
 let lapNumber = matrix.createNumber(laps, 0, 0, ledmatrix.colors(LedMatrixColors.White))
 
-// EN: shows the lap count in the middle (each digit is 3 wide plus 1 gap,
-//     5 high)
 // DE: zeigt die Rundenzahl in der Mitte (jede Ziffer ist 3 breit plus 1
 //     Lücke, 5 hoch)
+// EN: shows the lap count in the middle (each digit is 3 wide plus 1 gap,
+//     5 high)
 function showLaps() {
     let numberWidth = ("" + laps).length * 4 - 1
     lapNumber.setNumber(laps)
