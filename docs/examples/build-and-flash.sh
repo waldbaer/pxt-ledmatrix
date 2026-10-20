@@ -1,26 +1,33 @@
 #!/usr/bin/env bash
-# Builds one of the examples against this checkout of the extension and flashes
-# it onto a connected board.
+# Builds an example or another program, such as a course solution, against this
+# checkout of the extension and flashes it onto a connected board.
 #
-#   cd examples
+#   cd docs/examples
 #   ./build-and-flash.sh feature-tour-2.js              # Calliope mini 3
 #   ./build-and-flash.sh wiring-check.js v1             # Calliope mini 1 (v2: mini 2)
 #   ./build-and-flash.sh wiring-check.js microbit       # micro:bit
+#   ./build-and-flash.sh ../courses/solutions/03-magic-lamp.js
+#   ./build-and-flash.sh -b feature-tour-1.js v1        # build only, no flashing
 #
-# The build project goes to examples/built/<example>/ (ignored by git). The
+# The build project goes to docs/examples/built/<example>/ (ignored by git). The
 # MakeCode CLI is run with npx (set MKC to use another one). Flashing copies the
 # hex onto the board's USB drive (label MINI or MICROBIT), mounting it with
 # udisksctl if needed.
 set -euo pipefail
 
 usage() {
-    echo "usage: $0 <example.js> [v3|v2|v1|microbit]" >&2
+    echo "usage: $0 [-b|--build-only] <example.js> [v3|v2|v1|microbit]" >&2
     exit 2
 }
+build_only=false
+if [ "${1:-}" = "-b" ] || [ "${1:-}" = "--build-only" ]; then
+    build_only=true
+    shift
+fi
 [ $# -ge 1 ] && [ $# -le 2 ] || usage
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-repo="$(dirname "$here")"
+repo="$(cd "$here/../.." && pwd)"
 hw="${2:-v3}"
 mkc="${MKC:-npx --yes makecode@1.3.6}"
 
@@ -84,6 +91,9 @@ if [ ! -f "$project/$hex" ]; then
     exit 1
 fi
 echo "hex: $project/$hex"
+if $build_only; then
+    exit 0
+fi
 
 # ---- flash
 # prints the mount point of the board's drive, mounting it if needed
