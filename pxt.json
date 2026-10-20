@@ -1,6 +1,6 @@
 {
     "name": "ledmatrix",
-    "version": "0.2.0",
+    "version": "0.4.0",
     "description": "LED-Matrix für WS2812 / WS2812B (NeoPixel) jeder Größe und Verdrahtung: Zeichnen, Formen, Muster, Kollisionen, Zahlen | LED matrix for WS2812 / WS2812B (NeoPixel) of any size and wiring: drawing, shapes, patterns, collisions, numbers",
     "license": "MIT",
     "dependencies": {

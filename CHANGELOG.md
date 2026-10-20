@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.0]
+## [0.4.0] - 2026-10-20
 
 ### Features
 - School course in `docs/courses/`: ten exercises in German and English, each with a solution and an Extra solution.
@@ -8,7 +8,7 @@
 
 ### Changes
 - German first: blocks propose German variables (`rechteck`, `kreis`, …); README, `pxt.json` description and example comments in German and English.
-- README quick start shows a photo of the hardware.
+- README add wiring schematic / photo of the hardware.
 - Examples moved to `docs/examples/`.
 
 ## [0.3.0] - 2026-10-18
