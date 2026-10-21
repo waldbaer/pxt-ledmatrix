@@ -23,9 +23,6 @@ Each exercise has a solution and a solution with the Extra.
 > **For adults:** The exercises expect a 16x16 matrix whose LED chain starts at the top
 > left and runs down the columns in zig-zag. If it is wired differently, add the
 > `set wiring` block right after the setup (category LED Matrix, under "more").
-> The matrix needs its own 5 V power supply with its GND connected to the Calliope's GND:
-> all white, it draws about 2 A even at brightness 32. So keep the brightness at 32 or
-> lower. Wiring and power: see the [README](https://github.com/waldbaer/pxt-ledmatrix/blob/main/README.md).
 
 ---
 

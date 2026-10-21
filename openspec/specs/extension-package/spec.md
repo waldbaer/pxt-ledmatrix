@@ -110,15 +110,15 @@ A block that creates something SHALL propose a German variable when it is dragge
 - **THEN** the block sits in "set kreis to"
 
 ### Requirement: Compact README
-Each of the two language sections of `README.md` SHALL be at most 130 lines, not counting the MakeCode embed script line. Each SHALL cover: adding the extension, a quick start with the default layout, the layout settings with chain diagrams, a wiring troubleshooting table that refers to the example, a one-line-per-function API overview by group, power and pin notes, and a link to the course.
+Each of the two language sections of `README.md` SHALL be at most 130 lines, not counting the MakeCode embed script line. Each SHALL cover: adding the extension, a quick start with the default layout, the layout settings with chain diagrams, a wiring troubleshooting table that refers to the example, a one-line-per-function API overview by group, and a link to the course. It SHALL NOT give instructions for wiring or powering the matrix.
 
 #### Scenario: Adding the extension
 - **WHEN** a reader wants to use the extension
 - **THEN** each section tells them to open Extensions in MakeCode and paste `https://github.com/waldbaer/pxt-ledmatrix`, and mentions searching for the extension only if MakeCode search was verified to find it
 
 #### Scenario: Power and pin notes
-- **WHEN** a reader looks for power information
-- **THEN** each section says to use an external 5 V supply with GND connected to the board's GND, gives the approximate current of a 16x16 panel at the default brightness and at full brightness, and warns against using the data pin as a touch input
+- **WHEN** the README is read
+- **THEN** neither section has a wiring schematic, says which board pins to connect to the matrix, recommends a power supply or level shifter, gives current figures or sets a brightness limit
 
 #### Scenario: Troubleshooting
 - **WHEN** a reader's panel shows a garbled picture
