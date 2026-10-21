@@ -43,7 +43,7 @@
   "ledmatrix.Matrix.ledIndex|param|x": "Spalte",
   "ledmatrix.Matrix.ledIndex|param|y": "Zeile",
   "ledmatrix.Matrix.removeAllShapes": "Löscht alle Formen dieser Matrix. Die Zeichnung bleibt.",
-  "ledmatrix.Matrix.setBrightness": "Setzt die Helligkeit beim Anzeigen (0-255). Große Matrizen brauchen viel Strom, also niedrig anfangen. Die gespeicherten Farben ändern sich nicht.",
+  "ledmatrix.Matrix.setBrightness": "Setzt die Helligkeit beim Anzeigen (0-255). Die gespeicherten Farben ändern sich nicht.",
   "ledmatrix.Matrix.setBrightness|param|brightness": "Helligkeit von 0 bis 255",
   "ledmatrix.Matrix.setColorOrder": "Setzt die Farbreihenfolge der LEDs. Nimm RGB, wenn Rot und Grün vertauscht sind.",
   "ledmatrix.Matrix.setColorOrder|param|order": "Reihenfolge der Farbbytes, die die LEDs erwarten",

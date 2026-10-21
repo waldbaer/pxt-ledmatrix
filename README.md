@@ -18,26 +18,6 @@ MakeCode-Blöcke für WS2812- / WS2812B-LED-Matrizen („NeoPixel“) jeder Grö
 
 In MakeCode für Calliope mini oder micro:bit **Erweiterungen** öffnen und `https://github.com/waldbaer/pxt-ledmatrix` einfügen.
 
-### Matrix anschließen
-
-```
-Calliope mini 3                                LED-Matrix
-Stiftleiste von vorne, USB-Buchse oben        +-----------+
-    +-----------------------------------------| 5V        |
-    |                                         |           |
-+---+--------------------+                    |           |
-|  VCC  P1   P3   C5 ... |                    |           |
-|  GND  P0   P2   C4 ... |                    |           |
-+---+---+----------------+                    |           |
-    |   +-------------------------------------| DIN       |
-    +-----------------------------------------| GND       |
-                                              +-----------+
-```
-
-Die Stiftleiste ist die lange Doppelreihe unten auf dem Calliope mini 3 ([Pinbelegung](https://docs.calliope.cc/tech/hardware/pins/)).
-VCC liefert nur 3,3 V und wenig Strom: Das reicht für erste Versuche mit wenigen, gedimmten LEDs. Für mehr LEDs oder mehr
-Helligkeit statt VCC ein eigenes 5-V-Netzteil an 5V und GND der Matrix anschließen.
-
 ### Schnellstart
 
 <img src="https://raw.githubusercontent.com/waldbaer/pxt-ledmatrix/main/docs/images/quickstart-blocks.png" width="700" alt="Der Schnellstart als MakeCode-Blöcke">
@@ -140,26 +120,6 @@ MakeCode blocks for WS2812 / WS2812B ("NeoPixel") LED matrices of any size and w
 ### Add the extension
 
 In MakeCode for Calliope mini or micro:bit, open **Extensions** and paste `https://github.com/waldbaer/pxt-ledmatrix`.
-
-### Connect the matrix
-
-```
-Calliope mini 3                                LED matrix
-pin header from the front, USB socket on top  +-----------+
-    +-----------------------------------------| 5V        |
-    |                                         |           |
-+---+--------------------+                    |           |
-|  VCC  P1   P3   C5 ... |                    |           |
-|  GND  P0   P2   C4 ... |                    |           |
-+---+---+----------------+                    |           |
-    |   +-------------------------------------| DIN       |
-    +-----------------------------------------| GND       |
-                                              +-----------+
-```
-
-The pin header is the long double row at the bottom of the Calliope mini 3 ([pinout](https://docs.calliope.cc/tech/hardware/pins/)).
-VCC gives only 3.3 V and little current: enough for first tries with a few dimmed LEDs. For more LEDs or more
-brightness, connect a 5 V power supply to the matrix's 5V and GND instead of VCC.
 
 ### Quick start
 

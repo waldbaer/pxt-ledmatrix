@@ -6,7 +6,7 @@
 
 Zehn Übungen für den Calliope mini mit der Erweiterung **LED-Matrix**, von bunten Bildern bis zu Spielen,
 auf dem [Übungsblatt](https://github.com/waldbaer/pxt-ledmatrix/blob/main/docs/courses/uebungen.md), mit einer Lösung und einer Lösung mit Extra für jede Übung.
-Ihr braucht einen Calliope mini 1, 2 oder 3 und eine 16x16-Matrix mit WS2812B-LEDs an Pin P0, mit eigenem 5-V-Netzteil.
+Ihr braucht einen Calliope mini 1, 2 oder 3 und eine Matrix mit WS2812B-LEDs an Pin P0. Die Lösungen sind für eine 16x16-Matrix geschrieben. Für eine kleinere passt ihr die Einrichtung und die Programmlogik an; manche Übungen wie Pong ergeben auf einer 8x8-Matrix aber keinen Sinn.
 
 | Nr. | Übung | Stufe | Steuerung | Lösungen |
 |---|---|---|---|---|
@@ -38,7 +38,7 @@ Ihr braucht einen Calliope mini 1, 2 oder 3 und eine 16x16-Matrix mit WS2812B-LE
 
 Ten exercises for the Calliope mini with the **LED Matrix** extension, from colorful pictures to games,
 on the [worksheet](https://github.com/waldbaer/pxt-ledmatrix/blob/main/docs/courses/exercises.md), with a solution and a solution with the Extra for each exercise.
-You need a Calliope mini 1, 2 or 3 and a 16x16 matrix of WS2812B LEDs on pin P0, with its own 5 V power supply.
+You need a Calliope mini 1, 2 or 3 and a matrix of WS2812B LEDs on pin P0. The solutions are written for a 16x16 matrix. For a smaller one, adapt the setup and the program logic; some exercises such as Pong make no sense on an 8x8 matrix.
 
 | No. | Exercise | Level | Controls | Solutions |
 |---|---|---|---|---|

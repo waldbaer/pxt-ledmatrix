@@ -141,8 +141,7 @@ namespace ledmatrix {
         // ---------------------------------------------------------------- setup
 
         /**
-         * Set the brightness used when showing (0-255). Large matrices draw a lot of
-         * current, so start low. The stored colors do not change.
+         * Set the brightness used when showing (0-255). The stored colors do not change.
          * @param brightness brightness from 0 to 255, eg: 32
          */
         //% blockId=ledmatrix_set_brightness block="%matrix|set brightness %brightness"

@@ -154,10 +154,8 @@ function rainbowScene() {
         matrix.shift(1, 0)
         frame()
     }
-    // DE: die ganze Matrix dimmen und zurück bis 32. Bleib bei 32 oder darunter:
-    //     Ein helles Panel braucht mehr Strom, als das Board liefern kann
-    // EN: dim the whole matrix down and back up to 32. Stay at 32 or below:
-    //     a bright panel needs more power than the board can give
+    // DE: die ganze Matrix dimmen und zurück bis 32
+    // EN: dim the whole matrix down and back up to 32
     for (let level = 32; level >= 0; level -= 2) {
         matrix.setBrightness(level)
         frame()

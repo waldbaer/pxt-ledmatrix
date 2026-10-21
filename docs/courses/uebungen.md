@@ -23,9 +23,6 @@ Zu jeder Übung gibt es eine Lösung und eine Lösung mit Extra.
 > **Für Erwachsene:** Die Übungen erwarten eine 16x16-Matrix, deren LED-Kette oben links
 > beginnt und in Spalten im Zickzack läuft. Ist sie anders verdrahtet, direkt nach dem
 > Einrichten den Block `setze Verdrahtung` einfügen (Kategorie LED-Matrix, unter „mehr“).
-> Die Matrix braucht ein eigenes 5-V-Netzteil, dessen GND mit dem GND des Calliope verbunden ist:
-> Ganz weiß zieht sie schon bei der Helligkeit 32 etwa 2 A. Die Helligkeit deshalb bei 32 oder
-> niedriger lassen. Anschluss und Strom: siehe [README](https://github.com/waldbaer/pxt-ledmatrix/blob/main/README.md).
 
 ---
 
