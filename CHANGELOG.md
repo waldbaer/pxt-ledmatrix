@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.1] - 2026-11-13
+
+### Changes
+- Docs: removed the wiring and power hints from the README, the school course, the feature tour and the `set brightness` help text.
+- School course: the solutions are written for 16x16, smaller matrices need adapting.
+
 ## [1.0.0] - 2026-10-20
 
 First stable version.
